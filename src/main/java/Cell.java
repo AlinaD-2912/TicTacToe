@@ -5,7 +5,7 @@ public class Cell {
     private String representation;
 
     public Cell() {
-        this.representation = "   ";
+        this.representation = " ";
     }
 
     public String setRepresentation(String representation) {
@@ -17,4 +17,7 @@ public class Cell {
         return this.representation;
     }
 
+    public boolean isEmpty() {
+        return this.representation.equals(" ");
+    }
 }
