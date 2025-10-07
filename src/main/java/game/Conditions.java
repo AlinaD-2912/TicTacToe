@@ -1,3 +1,4 @@
+package game;
 
 public class Conditions {
 
@@ -41,6 +42,36 @@ public class Conditions {
         }
         return false;
     }
+
+    // Check if the 3 symbols are aligned
+    public String getWinner(int size, Cell[][] table) {
+        // check rows
+        for (int i = 0; i < size; i++) {
+            // from left to right
+            if (table[i][0].getRepresentation().equals(table[i][1].getRepresentation()) && table[i][1].getRepresentation().equals(table[i][2].getRepresentation()) && !table[i][0].isEmpty()) {
+                return table[i][0].getRepresentation();
+            }
+        }
+
+        // check columns
+        for (int j = 0; j < size; j++) {
+            if (table[0][j].getRepresentation().equals(table[1][j].getRepresentation()) && table[1][j].getRepresentation().equals(table[2][j].getRepresentation()) && !table[0][j].isEmpty()) {
+                return table[0][j].getRepresentation();
+            }
+        }
+
+        // check diagonally
+        for (int j = 0; j < size; j++) {
+            if (table[0][0].getRepresentation().equals(table[1][1].getRepresentation()) && table[1][1].getRepresentation().equals(table[2][2].getRepresentation()) && !table[0][0].isEmpty()) {
+                return table[0][0].getRepresentation();
+            }
+            if (table[0][2].getRepresentation().equals(table[1][1].getRepresentation()) && table[1][1].getRepresentation().equals(table[2][0].getRepresentation()) && !table[0][2].isEmpty()) {
+                return table[0][2].getRepresentation();
+            }
+        }
+        return null;
+    }
+
 
 }
 

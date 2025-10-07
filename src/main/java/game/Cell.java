@@ -1,10 +1,11 @@
+package game;
 
-public class Player {
+public class Cell {
 
     private String representation;
 
-    public Player(String representation) {
-        this.representation = representation;
+    public Cell() {
+        this.representation = " ";
     }
 
     public String setRepresentation(String representation) {
@@ -14,5 +15,9 @@ public class Player {
 
     public String getRepresentation() {
         return this.representation;
+    }
+
+    public boolean isEmpty() {
+        return this.representation.equals(" ");
     }
 }
