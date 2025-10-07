@@ -1,4 +1,4 @@
-import game.TicTacToe;
+import TicTacToe.game.TicTacToe;
 
 public class Main {
     public static void main(String[] args) {

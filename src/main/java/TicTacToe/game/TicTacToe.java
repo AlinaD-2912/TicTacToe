@@ -1,9 +1,9 @@
-package game;
+package TicTacToe.game;
 
-import players.ArtificialPlayer;
-import players.HumanPlayer;
-import console.InteractionUtilisateur;
-import console.View;
+import TicTacToe.players.ArtificialPlayer;
+import TicTacToe.players.HumanPlayer;
+import TicTacToe.console.InteractionUtilisateur;
+import TicTacToe.console.View;
 
 public class TicTacToe {
 

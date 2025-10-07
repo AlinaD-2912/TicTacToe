@@ -1,4 +1,4 @@
-package console;
+package TicTacToe.console;
 
 public class View {
 

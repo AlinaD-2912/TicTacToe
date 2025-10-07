@@ -1,10 +1,10 @@
-package game;
+package TicTacToe.game;
 
-import players.ArtificialPlayer;
-import players.HumanPlayer;
-import players.Player;
-import console.InteractionUtilisateur;
-import console.View;
+import TicTacToe.players.ArtificialPlayer;
+import TicTacToe.players.HumanPlayer;
+import TicTacToe.players.Player;
+import TicTacToe.console.InteractionUtilisateur;
+import TicTacToe.console.View;
 
 import java.security.SecureRandom;
 public class Board {
@@ -175,11 +175,10 @@ public class Board {
             return gameState.Draw;
         }
         String winner = conditions.getWinner(size, table);
-        if (conditions.is3SymbolsAlligned(size, table)) {
-            if (winner == "X") {
+        if (winner != null) {
+            if (winner.equals("X")) {
                 return gameState.Player_X_Won;
-            }
-            else if (winner == "O") {
+            } else if (winner.equals("O")) {
                 return gameState.Player_O_Won;
             }
         }

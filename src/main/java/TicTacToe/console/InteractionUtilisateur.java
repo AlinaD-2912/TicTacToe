@@ -1,4 +1,4 @@
-package console;
+package TicTacToe.console;
 
 import java.util.Scanner;
 

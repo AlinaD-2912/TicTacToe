@@ -1,4 +1,4 @@
-package players;
+package TicTacToe.players;
 
 public class HumanPlayer extends Player {
 
