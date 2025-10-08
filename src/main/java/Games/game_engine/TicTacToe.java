@@ -1,9 +1,9 @@
-package TicTacToe.game;
+package Games.game_engine;
 
-import TicTacToe.players.ArtificialPlayer;
-import TicTacToe.players.HumanPlayer;
-import TicTacToe.console.InteractionUtilisateur;
-import TicTacToe.console.View;
+import Games.players.ArtificialPlayer;
+import Games.players.HumanPlayer;
+import Games.console.InteractionUtilisateur;
+import Games.console.View;
 
 public class TicTacToe {
 
@@ -23,6 +23,24 @@ public class TicTacToe {
     // Game engine
     public void play() {
         view.messageBeginningOfTheGame();
+        int input = interactionUtilisateur.userInputInt();
+        if (input == 1) {
+            playTicTacToe();
+        }
+        if (input == 2) {
+
+        }
+        if (input == 3) {
+
+        }
+        else {
+            view.warnings(0);
+        }
+    }
+
+    // Game engine
+    public void playTicTacToe() {
+        view.messageBeginningOfTheGameTicTacToe();
         int input = interactionUtilisateur.userInputInt();
         if (input == 1) {
             twoHumanPlayers();
@@ -63,11 +81,6 @@ public class TicTacToe {
     public void twoHumanPlayers() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
         while(!isOver()) {
-            // display
-            // getMoveFromPlayer = x,y
-            // getPlayerRepresentation = userInput (X, O)
-            // setOwner - in parameters send getMoveFromPlayer and getPlayerRepresentation
-            // switchPlayers - switches players
             board.display();
             int[] move = board.getMoveFromPlayer(1);
             board.setOwner(move[0], move[1], currentPlayer);

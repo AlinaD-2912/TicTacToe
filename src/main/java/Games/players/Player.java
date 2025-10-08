@@ -1,11 +1,15 @@
-package TicTacToe.game;
+package Games.players;
 
-public class Cell {
+public class Player {
 
     private String representation;
 
-    public Cell() {
-        this.representation = " ";
+    public Player(String representation) {
+        this.representation = representation;
+    }
+
+    public Player() {
+
     }
 
     public String setRepresentation(String representation) {
@@ -15,9 +19,5 @@ public class Cell {
 
     public String getRepresentation() {
         return this.representation;
-    }
-
-    public boolean isEmpty() {
-        return this.representation.equals(" ");
     }
 }
