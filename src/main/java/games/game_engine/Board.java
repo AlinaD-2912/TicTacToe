@@ -1,5 +1,6 @@
 package games.game_engine;
 
+import games.game_rules.MinMax;
 import games.game_rules.Rules;
 import games.players.ArtificialPlayer;
 import games.players.HumanPlayer;
@@ -7,14 +8,13 @@ import games.players.Player;
 import games.console.InteractionUtilisateur;
 import games.console.View;
 
-import java.security.SecureRandom;
 public class Board {
 
     private int sizeX;
     private int sizeY;
     private int x;
     private int y;
-    public enum gameState { Draw, Player_X_Won, Player_O_Won, Default }
+    public enum gameState { Draw, Player_X_Won, Player_O_Won, Default, Player_WhiteCircle_Won, Player_EmptyCircle_Won }
 
     private Cell[][] table;
     private HumanPlayer currentPlayer;
@@ -48,6 +48,10 @@ public class Board {
 
     public Cell[][] getTable() {
         return this.table;
+    }
+
+    public void setCurrentPlayer(HumanPlayer currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public void displayTire(int size, boolean newLine) {
@@ -89,6 +93,7 @@ public class Board {
             view.pickPlayerRepresentation();
             //loop on user input
             while (true) {
+                view.pickPlayerRepresentation();
                 String userInput = interactionUtilisateur.userInputString();
                 if (userInput.equals("X") || userInput.equals("O")) {
                     currentPlayer = new HumanPlayer(userInput);
@@ -184,22 +189,37 @@ public class Board {
                 currentArtificialPlayer.setRepresentation("X");
             }
         }
+        // switch players gomoku
+        if (gameMode == 4) {
+            if (currentPlayer.getRepresentation().equals("●")) {
+                currentPlayer.setRepresentation("○");
+            }else {
+                currentPlayer.setRepresentation("●");
+            }
+        }
     }
 
     // Returns current state of the game
-    public gameState gameState () {
+    public gameState gameState (int symbolsAlignedRequired) {
         rules =  new Rules();
-        Cell result = rules.findAlignedCells(table, sizeX, sizeY);
+        Cell result = rules.findAlignedCells(table, sizeX, sizeY, symbolsAlignedRequired);
         if (result != null && !result.isEmpty()) {
             String winner = result.getRepresentation();
             if (winner.equals("X")) {
                 return gameState.Player_X_Won;
             } else if (winner.equals("O")) {
                 return gameState.Player_O_Won;
+            }else if (winner.equals("●")) {
+                return gameState.Player_WhiteCircle_Won;
+            }else if (winner.equals("○")) {
+                return gameState.Player_EmptyCircle_Won;
             }
         }
         if (rules.isBoardFull(sizeX, table) ) {
             return gameState.Draw;
+        }
+        if (symbolsAlignedRequired <= 0) {
+            throw new IllegalArgumentException("symbolsAlignedRequired must be >= 1");
         }
 
         return gameState.Default;

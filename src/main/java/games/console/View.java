@@ -2,40 +2,59 @@ package games.console;
 
 public class View {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_VIOLET = "\u001B[34m";
+    public static final String ANSI_ROSE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
     public View(){
 
     }
 
     public void messageBeginningOfTheGame() {
-        System.out.println("\u001B[33m ========= Welcome ! =========\u001B[0m");
-        System.out.println("---------------------------------------");
-        System.out.println("\u001B[33m Choose the game you would like to play\u001B[0m");
-        System.out.println("\u001B[32m 1. TicTacToe\u001B[0m");
-        System.out.println("\u001B[35m 2. Gomoku\u001B[0m");
-        System.out.println("\u001B[36m 3. Puissance 4\u001B[0m");
-        System.out.println("---------------------------------------");
-        System.out.println("\u001B[33m So what do you prefer (1,2 or 3): \u001B[0m");
+        System.out.println(ANSI_YELLOW + "============= Welcome ! =============" + ANSI_RESET);
+        System.out.println(ANSI_VIOLET + "---------------------------------------" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "Choose the game you would like to play" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "1. TicTacToe" + ANSI_RESET);
+        System.out.println(ANSI_ROSE + "2. Gomoku" + ANSI_RESET);
+        System.out.println(ANSI_CYAN + "3. Puissance 4" + ANSI_RESET);
+        System.out.println(ANSI_VIOLET + "---------------------------------------" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "So what do you prefer (1,2 or 3): " + ANSI_RESET);
     }
     public void messageBeginningOfTheGameTicTacToe () {
-        System.out.println("\u001B[32m======= Welcome to Tic-Tac-Toe! =======\u001B[0m");
-        System.out.println("\u001B[32m---------------------------------------\u001B[0m");
-        System.out.println("\u001B[32mNow choose what mode of game you prefer\u001B[0m");
-        System.out.println("\u001B[33m 1. 2 human players \u001B[0m");
-        System.out.println("\u001B[33m 2. player vs artificial player\u001B[0m");
-        System.out.println("\u001B[33m 3. 2 artificial players\u001B[0m");
-        System.out.println("\u001B[32m---------------------------------------\u001B[0m");
-        System.out.println("\u001B[32mSo what do you prefer (1,2 or 3): \u001B[0m");
+        System.out.println( ANSI_YELLOW + "======= Welcome to Tic-Tac-Toe! =======" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "---------------------------------------");
+        System.out.println("Now choose what mode of game you prefer" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "1. 2 human players ");
+        System.out.println("2. player vs artificial player");
+        System.out.println("3. 2 artificial players" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "---------------------------------------");
+        System.out.println("So what do you prefer (1,2 or 3): " + ANSI_RESET);
     }
 
     public void pickXCoordinate() {
-        System.out.println("Pick the coordinate for x (0,1,2...): ");
+        System.out.println(ANSI_YELLOW + "Pick the coordinate for x (0,1,2...): " + ANSI_RESET);
     }
     public void pickYCoordinate() {
-        System.out.println("Pick the coordinate for y (0,1,2...): ");
+        System.out.println(ANSI_YELLOW + "Pick the coordinate for y (0,1,2...): " + ANSI_RESET);
     }
 
     public void pickPlayerRepresentation() {
-        System.out.println("Pick (X or O): ");
+        System.out.println(ANSI_GREEN + "Pick (X or O): " + ANSI_RESET);
     }
 
     public void warnings (int nb) {
@@ -55,7 +74,19 @@ public class View {
         if (message == 3) {
             System.out.println("    Player X Won          ");
         }
+        if (message == 4) {
+            System.out.println("    Player ● Won          ");
+        }
+        if (message == 5) {
+            System.out.println("    Player ○ Won          ");
+        }
 
+    }
+
+
+    public void messageBeginningOfTheGameGomoku () {
+        System.out.println(ANSI_ROSE + "======= Welcome to GOMOKU !!! =======" + ANSI_RESET);
+        System.out.println(ANSI_VIOLET + "---------------------------------------" + ANSI_RESET);
     }
 
 

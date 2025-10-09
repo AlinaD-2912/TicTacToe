@@ -18,6 +18,7 @@ public abstract class Game {
         this.y = y;
     }
 
+    public abstract boolean isOver ();
     public abstract void play();
 
     public int getX() {

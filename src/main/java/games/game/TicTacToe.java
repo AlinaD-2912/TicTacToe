@@ -44,19 +44,21 @@ public class TicTacToe extends Game {
     }
 
     // Game over
+    @Override
     public boolean isOver () {
-        if (board.gameState() == Board.gameState.Draw)
+        int symbolRequired = 3;
+        if (board.gameState(symbolRequired) == Board.gameState.Draw)
         {
             view.gameOverMessage(1);
             board.display();
             return true;
         }
-        if (board.gameState() == Board.gameState.Player_O_Won) {
+        if (board.gameState(symbolRequired) == Board.gameState.Player_O_Won) {
             view.gameOverMessage(2);
             board.display();
             return true;
         }
-        if (board.gameState() == Board.gameState.Player_X_Won) {
+        if (board.gameState(symbolRequired) == Board.gameState.Player_X_Won) {
             view.gameOverMessage(3);
             board.display();
             return true;

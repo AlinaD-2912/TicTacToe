@@ -11,6 +11,11 @@ public class Connect4 extends Game {
     }
 
     @Override
+    public boolean isOver() {
+        return false;
+    }
+
+    @Override
     public void setX(int x) {
         this.x = x;
     }

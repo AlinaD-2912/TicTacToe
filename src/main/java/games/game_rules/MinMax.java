@@ -1,6 +1,7 @@
-package games.game_engine;
+package games.game_rules;
 
-import games.game_rules.Rules;
+import games.game_engine.Board;
+import games.game_engine.Cell;
 import games.players.ArtificialPlayer;
 import games.players.Player;
 
@@ -27,7 +28,7 @@ public class MinMax {
         //return -50
 
         // checks the full alignment needed to win, determines who wins
-        Cell fullWin = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY());
+        Cell fullWin = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY(), size);
         if (fullWin != null) {
             // artificial player wins
             if (fullWin.getRepresentation().equals(artificialPlayer.getRepresentation())) {
@@ -39,7 +40,7 @@ public class MinMax {
             }
         }
         // checks the alignment minus 1, so only 1 step left to win, and for whom
-        Cell almostWon = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY() - 1);
+        Cell almostWon = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY() - 1, size);
         if (almostWon != null) {
             if (almostWon.getRepresentation().equals(artificialPlayer.getRepresentation())) {
                 return 5; // artificial player almost wins
