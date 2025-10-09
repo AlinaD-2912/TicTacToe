@@ -1,4 +1,4 @@
-package Games.players;
+package games.players;
 
 public class HumanPlayer extends Player {
 

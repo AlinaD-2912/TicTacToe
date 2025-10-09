@@ -1,18 +1,19 @@
-package Games.game_engine;
+package games.game_engine;
 
-import Games.game_rules.Rules;
-import Games.players.ArtificialPlayer;
-import Games.players.HumanPlayer;
-import Games.players.Player;
-import Games.console.InteractionUtilisateur;
-import Games.console.View;
+import games.game_rules.Rules;
+import games.players.ArtificialPlayer;
+import games.players.HumanPlayer;
+import games.players.Player;
+import games.console.InteractionUtilisateur;
+import games.console.View;
 
 import java.security.SecureRandom;
 public class Board {
 
-    private int size = 3;
-    private int x = 3;
-    private int y = 3;
+    private int sizeX;
+    private int sizeY;
+    private int x;
+    private int y;
     public enum gameState { Draw, Player_X_Won, Player_O_Won, Default }
 
     private Cell[][] table;
@@ -21,13 +22,14 @@ public class Board {
     private InteractionUtilisateur interactionUtilisateur;
     private ArtificialPlayer currentArtificialPlayer;
     private Rules rules;
-    private SecureRandom secureRandom = new SecureRandom();
 
     // Board initializer
-    public Board() {
-        table = new Cell[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+    public Board(int sizeX, int sizeY) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        table = new Cell[sizeX][sizeY];
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 table[i][j] = new Cell();
             }
         }
@@ -36,8 +38,12 @@ public class Board {
         interactionUtilisateur = new InteractionUtilisateur();
     }
 
-    public int getSize() {
-        return this.size;
+    public int getSizeX() {
+        return this.sizeX;
+    }
+
+    public int getSizeY() {
+        return this.sizeY;
     }
 
     public Cell[][] getTable() {
@@ -55,25 +61,24 @@ public class Board {
             System.out.print("-");
             for (int i = 0; i < size; i++) {
                 System.out.print("----");
-
             }System.out.print("\n");
         }
     }
 
     // Display Board
     public void display() {
-        displayTire(x, false);
+        displayTire(sizeX, false);
         System.out.print("\n");
-        for (int i = 0; i < x; i++) {
+        for (int i = 0; i < sizeX; i++) {
             System.out.print("|");
-            for (int j = 0; j < y; j++) {
+            for (int j = 0; j < sizeY; j++) {
                 System.out.print(" " + table[i][j].getRepresentation() + " ");
-                if (j < y + 1) System.out.print("|");
+                if (j < sizeY + 1) System.out.print("|");
             }
             System.out.println();
-            if (i < x - 1) displayTire(x, true);
+            if (i < sizeX - 1) displayTire(sizeX, true);
         }
-        displayTire(x, true);
+        displayTire(sizeX, true);
         System.out.print("\n");
     }
 
@@ -115,12 +120,12 @@ public class Board {
                 view.pickYCoordinate();
                 y = interactionUtilisateur.userInputInt();
                 //check x = row
-                if (x < 0 || x >= size) {
+                if (x < 0 || x >= sizeX) {
                     view.warnings(1);
                     continue;
                 }
                 //check y = column
-                if (y < 0 || y >= size) {
+                if (y < 0 || y >= sizeY) {
                     view.warnings(2);
                     continue;
                 }
@@ -134,18 +139,6 @@ public class Board {
         }
 
         if (gameMode == 2) {
-            //loop on coordinates
-//            currentArtificialPlayer.getRepresentation();
-//            while (true) {
-//                x = secureRandom.nextInt(size);
-//                y = secureRandom.nextInt(size);
-//                // if empty, choose another cell
-//                if (table[x][y].getRepresentation().equals("X") ||
-//                        table[x][y].getRepresentation().equals("O")) {
-//                    continue;
-//                }
-//                return new int[]{x, y};
-//            }
             MinMax aiLogic = new MinMax();
             Player aiPlayer = currentArtificialPlayer;
             Player opponent = currentPlayer;
@@ -166,6 +159,7 @@ public class Board {
     // Players switching
     public void switchPlayers (int gameMode) {
         currentArtificialPlayer = new ArtificialPlayer(" ");
+        // switch 2 human players
         if (gameMode == 1) {
             if (currentPlayer.getRepresentation().equals("X")) {
                 currentPlayer.setRepresentation("O");
@@ -173,6 +167,7 @@ public class Board {
                 currentPlayer.setRepresentation("X");
             }
         }
+        // switch human and artificial players
         if (gameMode == 2) {
             if (currentPlayer.getRepresentation().equals("O")) {
                 currentArtificialPlayer.setRepresentation("X");
@@ -181,6 +176,7 @@ public class Board {
                 currentArtificialPlayer.setRepresentation("O");
             }
         }
+        // switch 2 artificial players
         if (gameMode == 3) {
             if (currentArtificialPlayer.getRepresentation().equals("X")) {
                 currentArtificialPlayer.setRepresentation("O");
@@ -193,7 +189,7 @@ public class Board {
     // Returns current state of the game
     public gameState gameState () {
         rules =  new Rules();
-        Cell result = rules.findAlignedCells(table, size, size);
+        Cell result = rules.findAlignedCells(table, sizeX, sizeY);
         if (result != null && !result.isEmpty()) {
             String winner = result.getRepresentation();
             if (winner.equals("X")) {
@@ -202,7 +198,7 @@ public class Board {
                 return gameState.Player_O_Won;
             }
         }
-        if (rules.isBoardFull(size, table) ) {
+        if (rules.isBoardFull(sizeX, table) ) {
             return gameState.Draw;
         }
 

@@ -1,4 +1,4 @@
-import Games.game_engine.TicTacToe;
+import games.game_engine.GameLauncher;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,8 +9,8 @@ public class Main {
         System.out.println("\u001B[35m Rose line\u001B[0m");
         System.out.println("\u001B[36m Blue line\u001B[0m");
 
-        TicTacToe ticTacToe = new TicTacToe();
-        ticTacToe.play();
+        GameLauncher gameLauncher = new GameLauncher();
+        gameLauncher.start();
     }
 
 }

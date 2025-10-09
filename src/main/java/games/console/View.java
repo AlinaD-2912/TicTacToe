@@ -1,4 +1,4 @@
-package Games.console;
+package games.console;
 
 public class View {
 
@@ -17,14 +17,14 @@ public class View {
         System.out.println("\u001B[33m So what do you prefer (1,2 or 3): \u001B[0m");
     }
     public void messageBeginningOfTheGameTicTacToe () {
-        System.out.println("======= Welcome to Tic-Tac-Toe! =======");
-        System.out.println("---------------------------------------");
-        System.out.println("Now choose what mode of game you prefer");
-        System.out.println("1. 2 human players ");
-        System.out.println("2. player vs artificial player");
-        System.out.println("3. 2 artificial players");
-        System.out.println("---------------------------------------");
-        System.out.println("So what do you prefer (1,2 or 3): ");
+        System.out.println("\u001B[32m======= Welcome to Tic-Tac-Toe! =======\u001B[0m");
+        System.out.println("\u001B[32m---------------------------------------\u001B[0m");
+        System.out.println("\u001B[32mNow choose what mode of game you prefer\u001B[0m");
+        System.out.println("\u001B[33m 1. 2 human players \u001B[0m");
+        System.out.println("\u001B[33m 2. player vs artificial player\u001B[0m");
+        System.out.println("\u001B[33m 3. 2 artificial players\u001B[0m");
+        System.out.println("\u001B[32m---------------------------------------\u001B[0m");
+        System.out.println("\u001B[32mSo what do you prefer (1,2 or 3): \u001B[0m");
     }
 
     public void pickXCoordinate() {

@@ -1,7 +1,7 @@
-package Games.game_rules;
+package games.game_rules;
 
 
-import Games.game_engine.Cell;
+import games.game_engine.Cell;
 
 import java.util.ArrayList;
 import java.util.List;

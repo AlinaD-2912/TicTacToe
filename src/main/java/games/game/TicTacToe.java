@@ -1,45 +1,32 @@
-package Games.game_engine;
+package games.game;
 
-import Games.players.ArtificialPlayer;
-import Games.players.HumanPlayer;
-import Games.console.InteractionUtilisateur;
-import Games.console.View;
+import games.game_engine.Board;
+import games.players.ArtificialPlayer;
+import games.players.HumanPlayer;
+import games.console.InteractionUtilisateur;
+import games.console.View;
 
-public class TicTacToe {
+public class TicTacToe extends Game {
 
+    private int size = 3;
+    private String name = "TicTacToe";
     private Board board;
     private HumanPlayer currentPlayer;
     private ArtificialPlayer currentArtificialPlayer;
     private View view;
     private InteractionUtilisateur interactionUtilisateur;
 
-
     public TicTacToe() {
-        board = new Board();
+        super(3,3 );
+        board = new Board(size, size);
         view = new View();
         interactionUtilisateur = new InteractionUtilisateur();
     }
 
+
     // Game engine
+    @Override
     public void play() {
-        view.messageBeginningOfTheGame();
-        int input = interactionUtilisateur.userInputInt();
-        if (input == 1) {
-            playTicTacToe();
-        }
-        if (input == 2) {
-
-        }
-        if (input == 3) {
-
-        }
-        else {
-            view.warnings(0);
-        }
-    }
-
-    // Game engine
-    public void playTicTacToe() {
         view.messageBeginningOfTheGameTicTacToe();
         int input = interactionUtilisateur.userInputInt();
         if (input == 1) {
@@ -117,7 +104,6 @@ public class TicTacToe {
             board.setOwner(move[0], move[1], currentArtificialPlayer);
             board.switchPlayers(3);
 
-
             if (currentArtificialPlayer == ai1) {
                 currentArtificialPlayer = ai2;
             } else {
@@ -127,7 +113,16 @@ public class TicTacToe {
     }
 
 
-
-
-
+    @Override
+    public void setX(int x) {
+        this.size = x;
+    }
+    @Override
+    public void setY(int y) {
+        this.size = y;
+    }
+    @Override
+    public void setName(String s) {
+        this.name = s;
+    }
 }

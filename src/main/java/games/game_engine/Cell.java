@@ -1,4 +1,4 @@
-package Games.game_engine;
+package games.game_engine;
 
 import java.util.List;
 
