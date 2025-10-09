@@ -18,9 +18,11 @@ public class GameLauncher {
         switch (input) {
             case 1 -> new TicTacToe().play();
             case 2 -> new Gomoku().play();
-            //case 3 -> new Gomoku().play();
+            case 3 -> new Connect4().play();
             default -> view.warnings(0);
         }
+
+
     }
 
 }

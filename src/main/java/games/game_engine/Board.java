@@ -14,7 +14,7 @@ public class Board {
     private int sizeY;
     private int x;
     private int y;
-    public enum gameState { Draw, Player_X_Won, Player_O_Won, Default, Player_WhiteCircle_Won, Player_EmptyCircle_Won }
+    public enum gameState { Draw, Player_X_Won, Player_O_Won, Default, Player_WhiteCircle_Won, Player_EmptyCircle_Won, RedCircle_Won, YellowCircle_Won }
 
     private Cell[][] table;
     private HumanPlayer currentPlayer;
@@ -71,7 +71,7 @@ public class Board {
 
     // Display Board
     public void display() {
-        displayTire(sizeX, false);
+        displayTire(sizeY, false);
         System.out.print("\n");
         for (int i = 0; i < sizeX; i++) {
             System.out.print("|");
@@ -80,9 +80,9 @@ public class Board {
                 if (j < sizeY + 1) System.out.print("|");
             }
             System.out.println();
-            if (i < sizeX - 1) displayTire(sizeX, true);
+            if (i < sizeX - 1) displayTire(sizeY, true);
         }
-        displayTire(sizeX, true);
+        displayTire(sizeY, true);
         System.out.print("\n");
     }
 
@@ -155,6 +155,17 @@ public class Board {
         return null;
     }
 
+    public int[] findPositionBelow(int[] position) {
+        int column = position[1];
+
+        // start from the bottom row
+        for (int row = sizeX - 1; row >= 0; row--) {
+            if (table[row][column].isEmpty()) {
+                return new int[]{row, column};
+            }
+        }
+        return new int[]{-1, -1};
+    }
 
     // Owner of the cell by x,y and chosen player representation
     public void setOwner(int row,  int col, Player player) {
@@ -197,6 +208,14 @@ public class Board {
                 currentPlayer.setRepresentation("●");
             }
         }
+        // switch players connect4
+        if (gameMode == 5) {
+            if (currentPlayer.getRepresentation().equals("\u001B[31m●\u001B[0m")) {
+                currentPlayer.setRepresentation("\u001B[33m●\u001B[0m");
+            }else {
+                currentPlayer.setRepresentation("\u001B[31m●\u001B[0m");
+            }
+        }
     }
 
     // Returns current state of the game
@@ -213,6 +232,11 @@ public class Board {
                 return gameState.Player_WhiteCircle_Won;
             }else if (winner.equals("○")) {
                 return gameState.Player_EmptyCircle_Won;
+            }
+            else if (winner.equals("\u001B[31m●\u001B[0m")) {
+                return gameState.RedCircle_Won;
+            }else if (winner.equals("\u001B[33m●\u001B[0m")) {
+                return gameState.YellowCircle_Won;
             }
         }
         if (rules.isBoardFull(sizeX, table) ) {
