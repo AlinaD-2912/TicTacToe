@@ -1,6 +1,6 @@
 package games.game;
 
-import games.console.InteractionUtilisateur;
+import games.console.UserInteraction;
 import games.console.View;
 import games.game_engine.Board;
 import games.players.ArtificialPlayer;
@@ -12,16 +12,13 @@ public class Gomoku extends Game {
     private String name;
     private Board board;
     private HumanPlayer currentPlayer;
-    private ArtificialPlayer currentArtificialPlayer;
     private View view;
-    private InteractionUtilisateur interactionUtilisateur;
     private TicTacToe ticTacToe;
 
     public Gomoku() {
         super(15,15 );
         board = new Board(size, size);
         view = new View();
-        interactionUtilisateur = new InteractionUtilisateur();
         currentPlayer = new HumanPlayer("");
     }
 

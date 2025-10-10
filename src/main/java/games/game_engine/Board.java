@@ -1,11 +1,12 @@
 package games.game_engine;
 
+import games.Coord;
 import games.game_rules.MinMax;
 import games.game_rules.Rules;
 import games.players.ArtificialPlayer;
 import games.players.HumanPlayer;
 import games.players.Player;
-import games.console.InteractionUtilisateur;
+import games.console.UserInteraction;
 import games.console.View;
 
 public class Board {
@@ -19,7 +20,7 @@ public class Board {
     private Cell[][] table;
     private HumanPlayer currentPlayer;
     private View view;
-    private InteractionUtilisateur interactionUtilisateur;
+    private UserInteraction interactionUtilisateur;
     private ArtificialPlayer currentArtificialPlayer;
     private Rules rules;
 
@@ -35,26 +36,10 @@ public class Board {
         }
         currentArtificialPlayer = new ArtificialPlayer("X");
         view = new View();
-        interactionUtilisateur = new InteractionUtilisateur();
+        interactionUtilisateur = new UserInteraction();
     }
 
-    public int getSizeX() {
-        return this.sizeX;
-    }
-
-    public int getSizeY() {
-        return this.sizeY;
-    }
-
-    public Cell[][] getTable() {
-        return this.table;
-    }
-
-    public void setCurrentPlayer(HumanPlayer currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public void displayTire(int size, boolean newLine) {
+    public void displayTable(int size, boolean newLine) {
         if (!newLine) {
             System.out.print("-");
             for (int i = 0; i < size; i++) {
@@ -71,7 +56,7 @@ public class Board {
 
     // Display Board
     public void display() {
-        displayTire(sizeY, false);
+        displayTable(sizeY, false);
         System.out.print("\n");
         for (int i = 0; i < sizeX; i++) {
             System.out.print("|");
@@ -80,9 +65,9 @@ public class Board {
                 if (j < sizeY + 1) System.out.print("|");
             }
             System.out.println();
-            if (i < sizeX - 1) displayTire(sizeY, true);
+            if (i < sizeX - 1) displayTable(sizeY, true);
         }
-        displayTire(sizeY, true);
+        displayTable(sizeY, true);
         System.out.print("\n");
     }
 
@@ -148,7 +133,8 @@ public class Board {
             Player aiPlayer = currentArtificialPlayer;
             Player opponent = currentPlayer;
 
-            int[] bestMove = aiLogic.getBestMove(table, aiPlayer, opponent);
+            Coord bestMoveCoord = aiLogic.getBestMove(table, aiPlayer, opponent);
+            int[] bestMove = {bestMoveCoord.row(), bestMoveCoord.col()};
             return bestMove;
 
         }
@@ -247,6 +233,22 @@ public class Board {
         }
 
         return gameState.Default;
+    }
+
+    public int getSizeX() {
+        return this.sizeX;
+    }
+
+    public int getSizeY() {
+        return this.sizeY;
+    }
+
+    public Cell[][] getTable() {
+        return this.table;
+    }
+
+    public void setCurrentPlayer(HumanPlayer currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
 }

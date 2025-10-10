@@ -16,6 +16,14 @@ public class Cell {
         this.coordinates = coordinates;
     }
 
+    public boolean isEmpty() {
+        return this.representation.equals(" ") ;
+    }
+
+    public void clear() {
+        this.representation = " ";
+    }
+
     public String setRepresentation(String representation) {
         this.representation = representation;
         return representation;
@@ -27,12 +35,5 @@ public class Cell {
 
     public List<int[]> getCoordinates() { return coordinates; }
 
-    public boolean isEmpty() {
-        return this.representation.equals(" ") ;
-    }
-
-    public void clear() {
-        this.representation = " ";
-    }
 
 }

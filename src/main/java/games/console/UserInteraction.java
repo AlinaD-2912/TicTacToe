@@ -2,14 +2,14 @@ package games.console;
 
 import java.util.Scanner;
 
-public class InteractionUtilisateur {
+public class UserInteraction {
 
     private Scanner scanner;
 
-    public InteractionUtilisateur(){
+    public UserInteraction(){
         scanner = new Scanner(System.in);
     }
-
+ 
     public int userInputInt() {
         int input = scanner.nextInt();
         return input;

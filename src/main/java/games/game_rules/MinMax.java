@@ -1,16 +1,20 @@
 package games.game_rules;
 
+import games.Coord;
 import games.game_engine.Board;
 import games.game_engine.Cell;
 import games.players.ArtificialPlayer;
 import games.players.Player;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MinMax {
 
     private static final int MAX_DEPTH = 6;
     private Rules rules;
     private Board board;
-    private ArtificialPlayer oponent;
     private int size = 3;
 
     public MinMax() {
@@ -18,103 +22,98 @@ public class MinMax {
         board = new Board(3, 3);
     }
 
-    // to know which board positions good or bad
-    private int evaluateBoard(Cell[][] table, Player artificialPlayer) {
-        // Si gagné
-        // return 50
-        // Si draw
-        //return 0
-        // si perdu
-        //return -50
-
-        // checks the full alignment needed to win, determines who wins
-        Cell fullWin = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY(), size);
-        if (fullWin != null) {
-            // artificial player wins
-            if (fullWin.getRepresentation().equals(artificialPlayer.getRepresentation())) {
-                return 10;
-            }
-            // player wins
-            else {
-                return -10;
-            }
-        }
-        // checks the alignment minus 1, so only 1 step left to win, and for whom
-        Cell almostWon = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY() - 1, size);
-        if (almostWon != null) {
-            if (almostWon.getRepresentation().equals(artificialPlayer.getRepresentation())) {
-                return 5; // artificial player almost wins
-            } else {
-                return -8; // player almost wins
-            }
-        }
-        return 0; // draw
-    }
 
     // explore all possible moves, simulates the players response, returns score
     private int miniMax(Cell[][] table, int depth, boolean isMaximizing, Player artificialPlayer, Player opponent) {
-        // evaluate the current board
-        int score = evaluateBoard(table, artificialPlayer);
-        if (Math.abs(score) == 10 || depth == 0 || rules.isBoardFull(board.getSizeX(), table)) {
-            return score;
+        // si fin de jeu
+            // si gagne => return 10
+            // si perdu => return -10
+            // sinon => return 0
+
+        Cell winner = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY(), size);
+        if (winner != null) {
+            if (winner.getRepresentation().equals(artificialPlayer.getRepresentation())) { return 99;}
+            else {return -99;}
         }
+
+        // si max depth
+            // return evaluate
+        if (depth == 0 || rules.isBoardFull(size, table)) {
+            return 0;
+        }
+
+        List<Coord> coords = new ArrayList<>();
+        for (int i = 0; i < board.getSizeX(); i++) {
+            for (int j = 0; j < board.getSizeY(); j++) {
+                if (table[i][j].isEmpty()) {
+                    coords.add(new Coord(i, j));
+                }
+            }
+        }
+
+        Collections.shuffle(coords);
+
         // artificial player's turn
         if (isMaximizing) {
             int best = Integer.MIN_VALUE;
-            for (int i = 0; i < board.getSizeX(); i++) {
-                for (int j = 0; j < board.getSizeY(); j++) {
-                    if (table[i][j].isEmpty()) {
-                        board.setOwner(i, j, artificialPlayer);
-                        best = Math.max(best, miniMax(table, depth - 1, false, artificialPlayer, opponent));
-                        // clear the simulation from the table
-                        board.getTable()[i][j].clear();
-                    }
-                }
+
+            for (Coord move : coords) {
+                int j = move.col();
+                int i =  move.row();
+                table[i][j].setRepresentation(artificialPlayer.getRepresentation());
+                int value = miniMax(table, depth - 1, false, artificialPlayer, opponent);
+                table[i][j].clear();
+                best = Math.max(best, value);
 
             }
+
             return best;
             // players turn
         } else {
             int best = Integer.MAX_VALUE;
-            for (int i = 0; i < board.getSizeX(); i++) {
-                for (int j = 0; j < board.getSizeY(); j++) {
-                    if (table[i][j].isEmpty()) {
-                        board.setOwner(i, j, opponent);
-                        best = Math.min(best, miniMax(table, depth - 1, true, artificialPlayer, opponent));
-                        // clear the simulation from the table
-                        board.getTable()[i][j].clear();
-                    }
-                }
+            for (Coord move : coords) {
+                int i = move.row();
+                int j = move.col();
+                table[i][j].setRepresentation(artificialPlayer.getRepresentation());
+                int value = miniMax(table, depth - 1, true, artificialPlayer, opponent);
+                table[i][j].clear();
+                best = Math.min(best, value);
             }
             return best;
         }
     }
 
     // loops over empty cells, uses minmax algorithm, pciks the best move
-    public int[] getBestMove(Cell[][] table, Player artificialPlayer, Player opponent) {
+    public Coord getBestMove(Cell[][] table, Player artificialPlayer, Player opponent) {
         int bestValue = Integer.MIN_VALUE;
-        // impossible coordinates
-        int[] bestMove = {-1, -1};
+        Coord bestMove = null;
+
+        List<Coord> moves = new ArrayList<>();
         for (int i = 0; i < board.getSizeX(); i++) {
             for (int j = 0; j < board.getSizeY(); j++) {
-                // for each empty cell
                 if (table[i][j].isEmpty()) {
-                    // simulates the move, modifies the board temporaly
-                    board.setOwner(i, j, artificialPlayer);
-                    // simulates what will happen next after the previous move, rates how good the move
-                    int moveValue = miniMax(table, MAX_DEPTH, false, artificialPlayer, opponent);
-                    // undo the simulation
-                    board.getTable()[i][j].clear();
-                    // replaces bestValue with the highest score of moveValue
-                    if (moveValue > bestValue) {
-                        bestValue = moveValue;
-                        bestMove[0] = i;
-                        bestMove[1] = j;
-                    }
+                    moves.add(new Coord(i, j));
                 }
             }
         }
-        return bestMove;
+
+        Collections.shuffle(moves);
+
+        for (Coord move : moves) {
+            int i = move.col();
+            int j = move.row();
+            table[i][j].setRepresentation(artificialPlayer.getRepresentation());
+
+            int moveValue = miniMax(table, MAX_DEPTH, false, artificialPlayer, opponent);
+            table[i][j].clear();
+
+            if (moveValue > bestValue) {
+                bestValue = moveValue;
+                bestMove = move;
+            }
+        }
+
+        return bestMove != null ? bestMove : new Coord(-1, -1);
 
     }
 }

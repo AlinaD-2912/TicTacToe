@@ -1,8 +1,5 @@
 package games.game;
 
-import games.console.InteractionUtilisateur;
-import games.console.View;
-
 
 public abstract class Game {
 

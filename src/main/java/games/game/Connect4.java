@@ -1,6 +1,6 @@
 package games.game;
 
-import games.console.InteractionUtilisateur;
+import games.console.UserInteraction;
 import games.console.View;
 import games.game_engine.Board;
 import games.players.ArtificialPlayer;
@@ -13,16 +13,15 @@ public class Connect4 extends Game {
     private String name = "Connect4";
     private Board board;
     private HumanPlayer currentPlayer;
-    private ArtificialPlayer currentArtificialPlayer;
     private View view;
-    private InteractionUtilisateur interactionUtilisateur;
+    private UserInteraction interactionUtilisateur;
     private TicTacToe ticTacToe;
 
     public Connect4() {
         super(6,7 );
         board = new Board(x, y);
         view = new View();
-        interactionUtilisateur = new InteractionUtilisateur();
+        interactionUtilisateur = new UserInteraction();
         currentPlayer = new HumanPlayer("");
     }
 

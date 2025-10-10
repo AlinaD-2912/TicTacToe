@@ -1,6 +1,6 @@
 package games.game_engine;
 
-import games.console.InteractionUtilisateur;
+import games.console.UserInteraction;
 import games.console.View;
 import games.game.Connect4;
 import games.game.Gomoku;
@@ -10,7 +10,7 @@ public class GameLauncher {
 
     public void start() {
         View view = new View();
-        InteractionUtilisateur interaction = new InteractionUtilisateur();
+        UserInteraction interaction = new UserInteraction();
 
         view.messageBeginningOfTheGame();
         int input = interaction.userInputInt();

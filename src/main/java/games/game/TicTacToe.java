@@ -3,7 +3,7 @@ package games.game;
 import games.game_engine.Board;
 import games.players.ArtificialPlayer;
 import games.players.HumanPlayer;
-import games.console.InteractionUtilisateur;
+import games.console.UserInteraction;
 import games.console.View;
 
 public class TicTacToe extends Game {
@@ -14,13 +14,13 @@ public class TicTacToe extends Game {
     private HumanPlayer currentPlayer;
     private ArtificialPlayer currentArtificialPlayer;
     private View view;
-    private InteractionUtilisateur interactionUtilisateur;
+    private UserInteraction userInteraction;
 
     public TicTacToe() {
         super(3,3 );
         board = new Board(size, size);
         view = new View();
-        interactionUtilisateur = new InteractionUtilisateur();
+        userInteraction = new UserInteraction();
     }
 
 
@@ -28,7 +28,7 @@ public class TicTacToe extends Game {
     @Override
     public void play() {
         view.messageBeginningOfTheGameTicTacToe();
-        int input = interactionUtilisateur.userInputInt();
+        int input = userInteraction.userInputInt();
         if (input == 1) {
             twoHumanPlayers();
         }
