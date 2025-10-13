@@ -1,5 +1,17 @@
-package games.game;
+/*
+ * Name of the class: Game
+ *
+ * Description: this class is the one other games inherit from, it is abstract and it's abstract functions have to
+ *              be present in the classes that inherit it
+ *
+ * Version: 1.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
 
+package games.game;
 
 public abstract class Game {
 

@@ -1,5 +1,17 @@
-package games.game;
+/*
+ * Name of the class: Gomoku
+ *
+ * Description: this class is responsible for the logic and gaming process of Gomoku,
+ *              it determines in which way the board functions will be used, and has its own conditions for isOver
+ *
+ * Version: 1.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
 
+package games.game;
 import games.console.UserInteraction;
 import games.console.View;
 import games.game_engine.Board;
@@ -43,7 +55,6 @@ public class Gomoku extends Game {
         }
         return false;
     }
-
 
     @Override
     public void play() {

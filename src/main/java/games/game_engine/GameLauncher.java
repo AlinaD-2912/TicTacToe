@@ -1,3 +1,15 @@
+/*
+ * Name of the class: GameLauncher
+ *
+ * Description: launching the game based on user input its sole purpose
+ *
+ * Version: 2.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
+
 package games.game_engine;
 
 import games.console.UserInteraction;
@@ -21,8 +33,5 @@ public class GameLauncher {
             case 3 -> new Connect4().play();
             default -> view.warnings(0);
         }
-
-
     }
-
 }

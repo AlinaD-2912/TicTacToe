@@ -1,3 +1,18 @@
+/*
+ * Name of the class: Board
+ *
+ * Description: this class is responsible for all the processes happening on board, it displays board, get player's moves
+ *              it provides player's representation, then assigns the representation of the current player to the cell
+ *              that he chosen, it determines the game state and switches players. This class is a game engine, it has
+ *              every needed method to build new game with reusable functions.
+ *
+ * Version: 2.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
+
 package games.game_engine;
 
 import games.Coord;
@@ -238,15 +253,12 @@ public class Board {
     public int getSizeX() {
         return this.sizeX;
     }
-
     public int getSizeY() {
         return this.sizeY;
     }
-
     public Cell[][] getTable() {
         return this.table;
     }
-
     public void setCurrentPlayer(HumanPlayer currentPlayer) {
         this.currentPlayer = currentPlayer;
     }

@@ -1,3 +1,15 @@
+/*
+ * Name of the class: Cell
+ *
+ * Description: this class is important as it is used to create the board for each game, and represent each cell of it
+ *
+ * Version: 2.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
+
 package games.game_engine;
 
 import java.util.List;

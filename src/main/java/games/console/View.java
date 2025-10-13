@@ -1,3 +1,15 @@
+/*
+ * Name of the class: View
+ *
+ * Description: this class is responsible for the appearance in the console, user interface
+ *
+ * Version: 1.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
+
 package games.console;
 
 public class View {
@@ -26,6 +38,7 @@ public class View {
         System.out.println(ANSI_VIOLET + "---------------------------------------" + ANSI_RESET);
         System.out.println(ANSI_YELLOW + "So what do you prefer (1,2 or 3): " + ANSI_RESET);
     }
+
     public void messageBeginningOfTheGameTicTacToe () {
         System.out.println( ANSI_YELLOW + "======= Welcome to Tic-Tac-Toe! =======" + ANSI_RESET);
         System.out.println(ANSI_GREEN + "---------------------------------------");
@@ -40,6 +53,7 @@ public class View {
     public void pickXCoordinate() {
         System.out.println(ANSI_YELLOW + "Pick the coordinate for x (0,1,2...): " + ANSI_RESET);
     }
+
     public void pickYCoordinate() {
         System.out.println(ANSI_YELLOW + "Pick the coordinate for y (0,1,2...): " + ANSI_RESET);
     }
@@ -74,11 +88,9 @@ public class View {
 
     }
 
-
     public void messageBeginningOfTheGameGomoku () {
         System.out.println(ANSI_ROSE + "======= Welcome to GOMOKU !!! =======" + ANSI_RESET);
         System.out.println(ANSI_VIOLET + "---------------------------------------" + ANSI_RESET);
     }
-
 
 }

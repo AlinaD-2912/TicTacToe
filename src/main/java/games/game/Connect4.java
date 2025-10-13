@@ -1,3 +1,16 @@
+/*
+ * Name of the class: Connect4
+ *
+ * Description: this class is responsible for the logic of gaming process for the game Connect4,
+ *              it determines in which way the board functions will be used, and has its own conditions for isOver
+ *
+ * Version: 1.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
+
 package games.game;
 
 import games.console.UserInteraction;
@@ -61,7 +74,6 @@ public class Connect4 extends Game {
         }
     }
 
-
     @Override
     public void setX(int x) {
         this.x = x;
@@ -74,8 +86,5 @@ public class Connect4 extends Game {
     public void setName(String s) {
         this.name = s;
     }
-
-
-
 
 }

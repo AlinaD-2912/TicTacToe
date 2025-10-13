@@ -3,7 +3,6 @@ package games.game_rules;
 import games.Coord;
 import games.game_engine.Board;
 import games.game_engine.Cell;
-import games.players.ArtificialPlayer;
 import games.players.Player;
 
 import java.util.ArrayList;
@@ -23,21 +22,31 @@ public class MinMax {
     }
 
 
+    // Deep copy the board for simulation
+    private Cell[][] createCopyOfBoard(Cell[][] table) {
+        Cell[][] copy = new Cell[table.length][table[0].length];
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                copy[i][j] = new Cell();
+                if (!table[i][j].isEmpty()) {
+                    copy[i][j].setRepresentation(table[i][j].getRepresentation());
+                }
+            }
+        }
+        return copy;
+    }
+
     // explore all possible moves, simulates the players response, returns score
     private int miniMax(Cell[][] table, int depth, boolean isMaximizing, Player artificialPlayer, Player opponent) {
-        // si fin de jeu
-            // si gagne => return 10
-            // si perdu => return -10
-            // sinon => return 0
-
         Cell winner = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY(), size);
         if (winner != null) {
-            if (winner.getRepresentation().equals(artificialPlayer.getRepresentation())) { return 99;}
-            else {return -99;}
+            if (winner.getRepresentation().equals(artificialPlayer.getRepresentation())) {
+                return 99;
+            } else {
+                return -99;
+            }
         }
 
-        // si max depth
-            // return evaluate
         if (depth == 0 || rules.isBoardFull(size, table)) {
             return 0;
         }
@@ -58,23 +67,22 @@ public class MinMax {
             int best = Integer.MIN_VALUE;
 
             for (Coord move : coords) {
+                int i = move.row();
                 int j = move.col();
-                int i =  move.row();
                 table[i][j].setRepresentation(artificialPlayer.getRepresentation());
                 int value = miniMax(table, depth - 1, false, artificialPlayer, opponent);
                 table[i][j].clear();
                 best = Math.max(best, value);
-
             }
 
             return best;
-            // players turn
         } else {
+            // opponent's turn
             int best = Integer.MAX_VALUE;
             for (Coord move : coords) {
                 int i = move.row();
                 int j = move.col();
-                table[i][j].setRepresentation(artificialPlayer.getRepresentation());
+                table[i][j].setRepresentation(opponent.getRepresentation());
                 int value = miniMax(table, depth - 1, true, artificialPlayer, opponent);
                 table[i][j].clear();
                 best = Math.min(best, value);
@@ -83,7 +91,7 @@ public class MinMax {
         }
     }
 
-    // loops over empty cells, uses minmax algorithm, pciks the best move
+    // loops over empty cells, uses minmax algorithm, picks the best move
     public Coord getBestMove(Cell[][] table, Player artificialPlayer, Player opponent) {
         int bestValue = Integer.MIN_VALUE;
         Coord bestMove = null;
@@ -97,15 +105,19 @@ public class MinMax {
             }
         }
 
+        // mix the coordinates
         Collections.shuffle(moves);
 
         for (Coord move : moves) {
-            int i = move.col();
-            int j = move.row();
-            table[i][j].setRepresentation(artificialPlayer.getRepresentation());
+            // Create a deep copy for this simulation
+            Cell[][] simulationBoard = createCopyOfBoard(table);
 
-            int moveValue = miniMax(table, MAX_DEPTH, false, artificialPlayer, opponent);
-            table[i][j].clear();
+            int i = move.row();
+            int j = move.col();
+            simulationBoard[i][j].setRepresentation(artificialPlayer.getRepresentation());
+
+            // score from minimax function
+            int moveValue = miniMax(simulationBoard, MAX_DEPTH, false, artificialPlayer, opponent);
 
             if (moveValue > bestValue) {
                 bestValue = moveValue;
@@ -114,6 +126,5 @@ public class MinMax {
         }
 
         return bestMove != null ? bestMove : new Coord(-1, -1);
-
     }
 }

@@ -1,3 +1,17 @@
+/*
+ * Name of the class: TicTacToe
+ *
+ * Description: this class is responsible for the logic and gaming process of TicTacToe,
+ *              it determines in which way and order the board functions will be used, has 3 different modes of game,
+ *              and inherits the same abstract functions from it's parent class
+ *
+ * Version: 1.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
+
 package games.game;
 
 import games.game_engine.Board;
@@ -22,7 +36,6 @@ public class TicTacToe extends Game {
         view = new View();
         userInteraction = new UserInteraction();
     }
-
 
     // Game engine
     @Override
@@ -90,7 +103,6 @@ public class TicTacToe extends Game {
             int[] moveArtificialPlayer = board.getMoveFromPlayer(2);
             board.setOwner(moveArtificialPlayer[0], moveArtificialPlayer[1], currentArtificialPlayer);
             board.switchPlayers(2);
-
         }
     }
 
@@ -113,7 +125,6 @@ public class TicTacToe extends Game {
             }
         }
     }
-
 
     @Override
     public void setX(int x) {
