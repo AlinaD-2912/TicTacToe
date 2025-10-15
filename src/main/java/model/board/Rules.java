@@ -1,7 +1,17 @@
-package games.game_rules;
+/*
+ * Name of the class: Rules
+ *
+ * Description: this class is a collection of rules (functions) that checks the current game state, the board, cells.
+ *              In any time new rules or conditions can be added here to be reused n the next game.
+ *
+ * Version: 1.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
 
-
-import games.game_engine.Cell;
+package model.board;
 
 import java.util.ArrayList;
 import java.util.List;

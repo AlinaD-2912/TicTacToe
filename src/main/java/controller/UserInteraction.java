@@ -10,7 +10,7 @@
  * Copyright: moi
  */
 
-package games.console;
+package controller;
 
 import java.util.Scanner;
 

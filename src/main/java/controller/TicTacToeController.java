@@ -12,108 +12,127 @@
  * Copyright: moi
  */
 
-package games.game;
+package controller;
 
-import games.game_engine.Board;
-import games.players.ArtificialPlayer;
-import games.players.HumanPlayer;
-import games.console.UserInteraction;
-import games.console.View;
+import model.board.Board;
+import model.player.ArtificialPlayer;
+import model.player.HumanPlayer;
+import view.View;
 
-public class TicTacToe extends Game {
+public class TicTacToeController extends GameController {
 
-    private int size = 3;
-    private String name = "TicTacToe";
+    private int BOARD_SIZE = 3;
+    private String GAME_NAME = "TicTacToe";
+    private int gameMode;
+
+    // models
     private Board board;
     private HumanPlayer currentPlayer;
     private ArtificialPlayer currentArtificialPlayer;
+
+    // view & input
     private View view;
     private UserInteraction userInteraction;
 
-    public TicTacToe() {
+    public TicTacToeController() {
         super(3,3 );
-        board = new Board(size, size);
+        board = new Board(BOARD_SIZE, BOARD_SIZE);
         view = new View();
         userInteraction = new UserInteraction();
+        setName(GAME_NAME);
     }
 
     // Game engine
     @Override
     public void play() {
         view.messageBeginningOfTheGameTicTacToe();
-        int input = userInteraction.userInputInt();
-        if (input == 1) {
+        gameMode = userInteraction.userInputInt();
+        if (gameMode == 1) {
             twoHumanPlayers();
-        }
-        if (input == 2) {
+        } else if (gameMode == 2) {
             humanVsArtificialPlayer();
-        }
-        if (input == 3) {
+        } else if (gameMode == 3) {
             artificialVsArtificial();
-        }
-        else {
+        } else {
             view.warnings(0);
         }
     }
 
     // Game over
     @Override
-    public boolean isOver () {
+    public boolean isOver() {
         int symbolRequired = 3;
-        if (board.gameState(symbolRequired) == Board.gameState.Draw)
-        {
-            view.gameOverMessage(1);
-            board.display();
-            return true;
+        Board.gameState result = board.gameState(symbolRequired);
+
+        switch (result) {
+            case Draw -> {
+                setState(State.DRAW);
+                view.gameOverMessage(1);
+                board.display();
+                return true;
+            }
+            case Player_O_Won, Player_X_Won -> {
+                setState(State.PLAYER_WON);
+                view.gameOverMessage(2);
+                board.display();
+                return true;
+            }
+            default -> {
+                setState(State.CONTINUING);
+                return false;
+            }
         }
-        if (board.gameState(symbolRequired) == Board.gameState.Player_O_Won) {
-            view.gameOverMessage(2);
-            board.display();
-            return true;
-        }
-        if (board.gameState(symbolRequired) == Board.gameState.Player_X_Won) {
-            view.gameOverMessage(3);
-            board.display();
-            return true;
-        }
-        return false;
     }
+
 
     // 2 human players mode
     public void twoHumanPlayers() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
-        while(!isOver()) {
+        setState(State.CONTINUING);
+
+        while (getState() == State.CONTINUING) {
             board.display();
             int[] move = board.getMoveFromPlayer(1);
             board.setOwner(move[0], move[1], currentPlayer);
             board.switchPlayers(1);
+
+            isOver(); // updates the state
         }
     }
+
 
     // 1 human vs 1 artificial player
     public void humanVsArtificialPlayer() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
         currentArtificialPlayer = (ArtificialPlayer) board.getPlayerRepresentation(false);
+        setState(State.CONTINUING);
 
-        while(!isOver()) {
+        while (getState() == State.CONTINUING) {
             board.display();
             int[] movePlayer = board.getMoveFromPlayer(1);
             board.setOwner(movePlayer[0], movePlayer[1], currentPlayer);
             board.switchPlayers(2);
+
+            isOver();
+            if (getState() != State.CONTINUING) break;
+
             int[] moveArtificialPlayer = board.getMoveFromPlayer(2);
             board.setOwner(moveArtificialPlayer[0], moveArtificialPlayer[1], currentArtificialPlayer);
             board.switchPlayers(2);
+
+            isOver();
         }
     }
+
 
     public void artificialVsArtificial() {
         ArtificialPlayer ai1 = new ArtificialPlayer("X");
         ArtificialPlayer ai2 = new ArtificialPlayer("O");
         ArtificialPlayer currentArtificialPlayer = ai1;
+        setState(State.CONTINUING);
 
-        while (!isOver()) {
+        while (getState() == State.CONTINUING) {
             board.display();
-
             int[] move = board.getMoveFromPlayer(2);
             board.setOwner(move[0], move[1], currentArtificialPlayer);
             board.switchPlayers(3);
@@ -123,19 +142,19 @@ public class TicTacToe extends Game {
             } else {
                 currentArtificialPlayer = ai1;
             }
+
+            isOver();
         }
     }
 
+
     @Override
     public void setX(int x) {
-        this.size = x;
+        this.BOARD_SIZE = x;
     }
     @Override
     public void setY(int y) {
-        this.size = y;
+        this.BOARD_SIZE = y;
     }
-    @Override
-    public void setName(String s) {
-        this.name = s;
-    }
+
 }

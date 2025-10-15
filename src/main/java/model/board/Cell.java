@@ -10,7 +10,7 @@
  * Copyright: moi
  */
 
-package games.game_engine;
+package model.board;
 
 import java.util.List;
 

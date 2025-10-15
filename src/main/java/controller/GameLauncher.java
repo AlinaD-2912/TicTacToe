@@ -10,13 +10,9 @@
  * Copyright: moi
  */
 
-package games.game_engine;
+package controller;
 
-import games.console.UserInteraction;
-import games.console.View;
-import games.game.Connect4;
-import games.game.Gomoku;
-import games.game.TicTacToe;
+import view.View;
 
 public class GameLauncher {
 
@@ -28,9 +24,9 @@ public class GameLauncher {
         int input = interaction.userInputInt();
 
         switch (input) {
-            case 1 -> new TicTacToe().play();
-            case 2 -> new Gomoku().play();
-            case 3 -> new Connect4().play();
+            case 1 -> new TicTacToeController().play();
+            case 2 -> new GomokuController().play();
+            case 3 -> new Connect4Controller().play();
             default -> view.warnings(0);
         }
     }

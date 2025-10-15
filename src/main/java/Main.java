@@ -1,4 +1,4 @@
-import games.game_engine.GameLauncher;
+import controller.GameLauncher;
 
 public class Main {
     public static void main(String[] args) {

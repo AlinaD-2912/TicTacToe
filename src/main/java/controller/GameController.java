@@ -11,18 +11,22 @@
  * Copyright: moi
  */
 
-package games.game;
+package controller;
 
-public abstract class Game {
+import java.util.EnumSet;
+
+public abstract class GameController {
 
     private int x;
     private int y;
     private String name;
+    private State currentState = State.CONTINUING;
 
-    public Game() {
+    public GameController() {
+
     }
 
-    public Game(int x, int y) {
+    public GameController(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -37,9 +41,7 @@ public abstract class Game {
         return this.y;
     }
 
-    public String getName() {
-        return this.name;
-    }
+
 
     public void setX(int x) {
         this.x = x;
@@ -49,6 +51,16 @@ public abstract class Game {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public void setState(State newState) {
+        this.currentState = newState;
+    }
+
+    public State getState() {
+        return this.currentState;
+    }
+    public String getName() {
+        return this.name;
     }
 
 }

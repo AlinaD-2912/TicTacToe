@@ -1,9 +1,20 @@
-package games.game_rules;
+/*
+ * Name of the class: MinMax
+ *
+ * Description: this class is used to replicate and imply minmax algorithm in game, this allows artificial player to
+ *              take more intelligent decision while playing game, and actually trying to win or prevent the opponent
+ *              from wining. creates a simulation on copied board and sends the best positions to Board.
+ *
+ * Version: 3.0
+ *
+ * Date: 13/10/2025
+ *
+ * Copyright: moi
+ */
 
-import games.Coord;
-import games.game_engine.Board;
-import games.game_engine.Cell;
-import games.players.Player;
+package model.board;
+
+import model.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +33,7 @@ public class MinMax {
     }
 
 
-    // Deep copy the board for simulation
+    // copy the board for simulation
     private Cell[][] createCopyOfBoard(Cell[][] table) {
         Cell[][] copy = new Cell[table.length][table[0].length];
         for (int i = 0; i < table.length; i++) {

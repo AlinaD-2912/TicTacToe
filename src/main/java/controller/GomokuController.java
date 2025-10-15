@@ -1,7 +1,7 @@
 /*
- * Name of the class: Connect4
+ * Name of the class: Gomoku
  *
- * Description: this class is responsible for the logic of gaming process for the game Connect4,
+ * Description: this class is responsible for the logic and gaming process of Gomoku,
  *              it determines in which way the board functions will be used, and has its own conditions for isOver
  *
  * Version: 1.0
@@ -11,48 +11,42 @@
  * Copyright: moi
  */
 
-package games.game;
+package controller;
+import model.board.Board;
+import model.player.HumanPlayer;
+import view.View;
 
-import games.console.UserInteraction;
-import games.console.View;
-import games.game_engine.Board;
-import games.players.ArtificialPlayer;
-import games.players.HumanPlayer;
+public class GomokuController extends GameController {
 
-public class Connect4 extends Game {
-
-    private int x = 6;
-    private int y = 7;
-    private String name = "Connect4";
+    private int size = 15;
+    private String name;
     private Board board;
     private HumanPlayer currentPlayer;
     private View view;
-    private UserInteraction interactionUtilisateur;
-    private TicTacToe ticTacToe;
+    private TicTacToeController ticTacToe;
 
-    public Connect4() {
-        super(6,7 );
-        board = new Board(x, y);
+    public GomokuController() {
+        super(15,15 );
+        board = new Board(size, size);
         view = new View();
-        interactionUtilisateur = new UserInteraction();
         currentPlayer = new HumanPlayer("");
     }
 
     @Override
     public boolean isOver() {
-        int symbolsRequired = 4;
+        int symbolsRequired = 5;
         if (board.gameState(symbolsRequired) == Board.gameState.Draw)
         {
             view.gameOverMessage(1);
             board.display();
             return true;
         }
-        if (board.gameState(symbolsRequired) == Board.gameState.RedCircle_Won) {
+        if (board.gameState(symbolsRequired) == Board.gameState.Player_WhiteCircle_Won) {
             view.gameOverMessage(4);
             board.display();
             return true;
         }
-        if (board.gameState(symbolsRequired) == Board.gameState.YellowCircle_Won) {
+        if (board.gameState(symbolsRequired) == Board.gameState.Player_EmptyCircle_Won) {
             view.gameOverMessage(5);
             board.display();
             return true;
@@ -63,28 +57,31 @@ public class Connect4 extends Game {
     @Override
     public void play() {
         view.messageBeginningOfTheGameGomoku();
-        currentPlayer = new HumanPlayer("\u001B[31m●\u001B[0m");
+        currentPlayer = new HumanPlayer("●");
         board.setCurrentPlayer(currentPlayer);
         while(!isOver()) {
             board.display();
             int[] move = board.getMoveFromPlayer(1);
-            int[] finalMove = board.findPositionBelow(move);
-            board.setOwner(finalMove[0], finalMove[1], currentPlayer);
-            board.switchPlayers(5);
+            board.setOwner(move[0], move[1], currentPlayer);
+            board.switchPlayers(4);
         }
+
     }
 
     @Override
     public void setX(int x) {
-        this.x = x;
+        this.size = x;
     }
     @Override
     public void setY(int y) {
-        this.y = y;
+        this.size = y;
     }
     @Override
     public void setName(String s) {
         this.name = s;
     }
+
+
+
 
 }

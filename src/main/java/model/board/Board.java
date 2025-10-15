@@ -13,16 +13,13 @@
  * Copyright: moi
  */
 
-package games.game_engine;
+package model.board;
 
-import games.Coord;
-import games.game_rules.MinMax;
-import games.game_rules.Rules;
-import games.players.ArtificialPlayer;
-import games.players.HumanPlayer;
-import games.players.Player;
-import games.console.UserInteraction;
-import games.console.View;
+import controller.UserInteraction;
+import model.player.ArtificialPlayer;
+import model.player.HumanPlayer;
+import model.player.Player;
+import view.View;
 
 public class Board {
 

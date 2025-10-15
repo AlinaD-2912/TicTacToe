@@ -10,7 +10,7 @@
  * Copyright: moi
  */
 
-package games.console;
+package view;
 
 public class View {
 
