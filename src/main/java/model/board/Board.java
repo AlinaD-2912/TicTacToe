@@ -49,6 +49,7 @@ public class Board {
         currentArtificialPlayer = new ArtificialPlayer("X");
         view = new View();
         interactionUtilisateur = new UserInteraction();
+
     }
 
     public void displayTable(int size, boolean newLine) {
@@ -85,6 +86,8 @@ public class Board {
 
     // Player representation (X or O)
     public Player getPlayerRepresentation(boolean isHuman) {
+
+        if (currentPlayer == null) throw new IllegalStateException("Current player not initialized");
         // check user input
         if (isHuman) {
             view.pickPlayerRepresentation();
@@ -166,9 +169,13 @@ public class Board {
     }
 
     // Owner of the cell by x,y and chosen player representation
-    public void setOwner(int row,  int col, Player player) {
+    public void setOwner(int row, int col, Player player) {
+        if (row < 0 || row >= sizeX) throw new IllegalArgumentException("Row out of bounds");
+        if (col < 0 || col >= sizeY) throw new IllegalArgumentException("Column out of bounds");
+        if (player == null) throw new IllegalArgumentException("Player cannot be null");
         table[row][col].setRepresentation(player.getRepresentation());
     }
+
 
     // Players switching
     public void switchPlayers (int gameMode) {
