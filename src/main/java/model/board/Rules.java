@@ -18,7 +18,9 @@ import java.util.List;
 
 public class Rules {
 
-    // Check the fullness of the board
+    /**
+     *  Checks the fullness of the board
+     */
     public boolean isBoardFull(int size, Cell[][] table) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -30,6 +32,9 @@ public class Rules {
         return true;
     }
 
+    /**
+     *  Finds alignments horizontally, vertically and by diagonals
+     */
     public Cell findAlignedCells(Cell[][] table, int sizeX, int sizeY, int symbolsRequired) {
         // ---- ROWS ----
         for (int i = 0; i < sizeX; i++) {
@@ -120,9 +125,5 @@ public class Rules {
         // No alignment found
         return new Cell(null, List.of());
     }
-
-
-
-
 
 }

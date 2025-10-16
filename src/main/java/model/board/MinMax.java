@@ -33,7 +33,9 @@ public class MinMax {
     }
 
 
-    // copy the board for simulation
+    /**
+     *  Creates the copy of the board to use for simulation
+     */
     private Cell[][] createCopyOfBoard(Cell[][] table) {
         Cell[][] copy = new Cell[table.length][table[0].length];
         for (int i = 0; i < table.length; i++) {
@@ -47,7 +49,9 @@ public class MinMax {
         return copy;
     }
 
-    // explore all possible moves, simulates the players response, returns score
+    /**
+     * Explores all possible moves, simulates the player response, returns score
+     */
     private int miniMax(Cell[][] table, int depth, boolean isMaximizing, Player artificialPlayer, Player opponent) {
         Cell winner = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY(), size);
         if (winner != null) {

@@ -36,7 +36,10 @@ public class Board {
     private ArtificialPlayer currentArtificialPlayer;
     private Rules rules;
 
-    // Board initializer
+
+    /**
+     * Board initializer and constructor
+     */
     public Board(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -52,6 +55,9 @@ public class Board {
 
     }
 
+    /**
+     * Helper function to print borders of board
+     */
     public void displayTable(int size, boolean newLine) {
         if (!newLine) {
             System.out.print("-");
@@ -67,7 +73,10 @@ public class Board {
         }
     }
 
-    // Display Board
+
+    /**
+     * Prints board
+     */
     public void display() {
         displayTable(sizeY, false);
         System.out.print("\n");
@@ -84,7 +93,9 @@ public class Board {
         System.out.print("\n");
     }
 
-    // Player representation (X or O)
+    /**
+     * Gets player representation (X or O)
+     */
     public Player getPlayerRepresentation(boolean isHuman) {
 
         if (currentPlayer == null) throw new IllegalStateException("Current player not initialized");
@@ -115,7 +126,10 @@ public class Board {
         }
     }
 
-    // Chosen coordinates x, y
+
+    /**
+     * Cheks the coordinates chosen by player, and decides if he can move there
+     */
     public int[] getMoveFromPlayer (int gameMode) {
         if (gameMode == 1) {
             //loop on coordinates
@@ -156,6 +170,10 @@ public class Board {
         return null;
     }
 
+
+    /**
+     * Gomoku special function to find the lowest position of the cell
+     */
     public int[] findPositionBelow(int[] position) {
         int column = position[1];
 
@@ -168,7 +186,9 @@ public class Board {
         return new int[]{-1, -1};
     }
 
-    // Owner of the cell by x,y and chosen player representation
+    /**
+     * Sets the owner of the cell by x,y and chosen player representation
+     */
     public void setOwner(int row, int col, Player player) {
         if (row < 0 || row >= sizeX) throw new IllegalArgumentException("Row out of bounds");
         if (col < 0 || col >= sizeY) throw new IllegalArgumentException("Column out of bounds");
@@ -177,7 +197,9 @@ public class Board {
     }
 
 
-    // Players switching
+    /**
+     * Players switching
+     */
     public void switchPlayers (int gameMode) {
         currentArtificialPlayer = new ArtificialPlayer(" ");
         // switch 2 human players
@@ -223,7 +245,10 @@ public class Board {
         }
     }
 
-    // Returns current state of the game
+
+    /**
+     * Returns current state of the game
+     */
     public gameState gameState (int symbolsAlignedRequired) {
         rules =  new Rules();
         Cell result = rules.findAlignedCells(table, sizeX, sizeY, symbolsAlignedRequired);
