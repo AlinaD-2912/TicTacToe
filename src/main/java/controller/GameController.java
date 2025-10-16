@@ -13,6 +13,8 @@
 
 package controller;
 
+import view.View;
+
 import java.util.EnumSet;
 
 public abstract class GameController {
@@ -21,6 +23,7 @@ public abstract class GameController {
     private int y;
     private String name;
     private State currentState = State.CONTINUING;
+    protected View view;
 
     public GameController() {
 
@@ -49,7 +52,7 @@ public abstract class GameController {
     public void setY(int y) {
         this.y = y;
     }
-    public void setName(String name) {
+    public void setGAME_NAME(String name) {
         this.name = name;
     }
     public void setState(State newState) {
@@ -61,6 +64,9 @@ public abstract class GameController {
     }
     public String getName() {
         return this.name;
+    }
+    public View getView() {
+        return view;
     }
 
 }

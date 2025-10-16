@@ -19,7 +19,7 @@ import model.player.ArtificialPlayer;
 import model.player.HumanPlayer;
 import view.View;
 
-public class TicTacToeController extends GameController {
+public class TicTacToe extends GameController {
 
     private int BOARD_SIZE = 3;
     private String GAME_NAME = "TicTacToe";
@@ -34,15 +34,17 @@ public class TicTacToeController extends GameController {
     private View view;
     private UserInteraction userInteraction;
 
-    public TicTacToeController() {
+    public TicTacToe() {
         super(3,3 );
         board = new Board(BOARD_SIZE, BOARD_SIZE);
         view = new View();
         userInteraction = new UserInteraction();
-        setName(GAME_NAME);
+        setGAME_NAME(GAME_NAME);
     }
 
-    // Game engine
+    /**
+     *  Game engine
+     */
     @Override
     public void play() {
         view.messageBeginningOfTheGameTicTacToe();
@@ -58,7 +60,9 @@ public class TicTacToeController extends GameController {
         }
     }
 
-    // Game over
+    /**
+     *  Game over
+     */
     @Override
     public boolean isOver() {
         int symbolRequired = 3;
@@ -84,8 +88,9 @@ public class TicTacToeController extends GameController {
         }
     }
 
-
-    // 2 human players mode
+    /**
+     *  2 human players mode
+     */
     public void twoHumanPlayers() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
         setState(State.CONTINUING);
@@ -100,8 +105,9 @@ public class TicTacToeController extends GameController {
         }
     }
 
-
-    // 1 human vs 1 artificial player
+    /**
+     *  1 human vs 1 artificial player
+     */
     public void humanVsArtificialPlayer() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
         currentArtificialPlayer = (ArtificialPlayer) board.getPlayerRepresentation(false);
@@ -124,7 +130,9 @@ public class TicTacToeController extends GameController {
         }
     }
 
-
+    /**
+     *  artificial vs artificial player
+     */
     public void artificialVsArtificial() {
         ArtificialPlayer ai1 = new ArtificialPlayer("X");
         ArtificialPlayer ai2 = new ArtificialPlayer("O");

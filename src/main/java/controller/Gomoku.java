@@ -16,42 +16,47 @@ import model.board.Board;
 import model.player.HumanPlayer;
 import view.View;
 
-public class GomokuController extends GameController {
+public class Gomoku extends GameController {
 
-    private int size = 15;
-    private String name;
+    private int BOARD_SIZE = 15;
+    private String GAME_NAME;
     private Board board;
     private HumanPlayer currentPlayer;
     private View view;
-    private TicTacToeController ticTacToe;
 
-    public GomokuController() {
+
+    public Gomoku() {
         super(15,15 );
-        board = new Board(size, size);
+        board = new Board(BOARD_SIZE, BOARD_SIZE);
         view = new View();
         currentPlayer = new HumanPlayer("");
+        setState(State.CONTINUING);
+        setGAME_NAME(GAME_NAME);
     }
 
     @Override
     public boolean isOver() {
         int symbolsRequired = 5;
-        if (board.gameState(symbolsRequired) == Board.gameState.Draw)
-        {
-            view.gameOverMessage(1);
-            board.display();
-            return true;
+        Board.gameState result = board.gameState(symbolsRequired);
+
+        switch (result) {
+            case Draw -> {
+                setState(State.DRAW);
+                view.gameOverMessage(1);
+                board.display();
+                return true;
+            }
+            case Player_WhiteCircle_Won, Player_EmptyCircle_Won -> {
+                setState(State.PLAYER_WON);
+                view.gameOverMessage(4);
+                board.display();
+                return true;
+            }
+            default -> {
+                setState(State.CONTINUING);
+                return false;
+            }
         }
-        if (board.gameState(symbolsRequired) == Board.gameState.Player_WhiteCircle_Won) {
-            view.gameOverMessage(4);
-            board.display();
-            return true;
-        }
-        if (board.gameState(symbolsRequired) == Board.gameState.Player_EmptyCircle_Won) {
-            view.gameOverMessage(5);
-            board.display();
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -59,26 +64,29 @@ public class GomokuController extends GameController {
         view.messageBeginningOfTheGameGomoku();
         currentPlayer = new HumanPlayer("●");
         board.setCurrentPlayer(currentPlayer);
-        while(!isOver()) {
+        setState(State.CONTINUING);
+
+        while (getState() == State.CONTINUING) {
             board.display();
             int[] move = board.getMoveFromPlayer(1);
             board.setOwner(move[0], move[1], currentPlayer);
             board.switchPlayers(4);
-        }
 
+            isOver();
+        }
     }
 
     @Override
     public void setX(int x) {
-        this.size = x;
+        this.BOARD_SIZE = x;
     }
     @Override
     public void setY(int y) {
-        this.size = y;
+        this.BOARD_SIZE = y;
     }
     @Override
-    public void setName(String s) {
-        this.name = s;
+    public void setGAME_NAME(String s) {
+        this.GAME_NAME = s;
     }
 
 
