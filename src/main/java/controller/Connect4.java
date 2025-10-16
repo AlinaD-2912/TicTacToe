@@ -27,6 +27,10 @@ public class Connect4 extends GameController {
     private View view;
     private UserInteraction interactionUtilisateur;
 
+    /**
+     * Constructor of Connect4
+     * Initializes the board, view, user interaction, current player, and sets the game state to CONTINUING
+     */
     public Connect4() {
         super(6,7 );
         board = new Board(x, y);
@@ -37,6 +41,13 @@ public class Connect4 extends GameController {
         setGAME_NAME(GAME_NAME);
     }
 
+
+    /**
+     * Checks if the game is over.
+     * A game is over if a player has aligned 4 symbols or if it is a draw
+     *
+     * @return boolean true if the game ended, false if it is still continuing
+     */
     @Override
     public boolean isOver() {
         int symbolsRequired = 4;
@@ -62,6 +73,11 @@ public class Connect4 extends GameController {
         }
     }
 
+
+    /**
+     * Game engine for Connect4
+     * Handles player turns, places discs in the correct position, and updates the board until the game is over
+     */
     @Override
     public void play() {
         view.messageBeginningOfTheGameGomoku();

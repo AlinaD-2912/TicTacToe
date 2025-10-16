@@ -14,6 +14,13 @@ package model.player;
 
 public class ArtificialPlayer extends Player {
 
+
+    /**
+     * Constructor of ArtificialPlayer
+     * Initializes the AI player with a given representation
+     *
+     * @param representation the symbol or token used to represent the player on the board
+     */
     public ArtificialPlayer(String representation) {
         super(representation);
     }

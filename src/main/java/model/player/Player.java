@@ -17,10 +17,21 @@ public class Player {
 
     private String representation;
 
+    /**
+     * Constructor with representation
+     * Initializes a player with a given symbol
+     *
+     * @param representation the symbol or token used to represent the player on the board
+     */
     public Player(String representation) {
         this.representation = representation;
     }
 
+
+    /**
+     * Default constructor
+     * Initializes a player without setting a representation
+     */
     public Player() {
 
     }

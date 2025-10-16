@@ -24,7 +24,10 @@ public class Gomoku extends GameController {
     private HumanPlayer currentPlayer;
     private View view;
 
-
+    /**
+     * Constructor of Gomoku
+     * Initializes the board, view, current player, and sets the game state to CONTINUING
+     */
     public Gomoku() {
         super(15,15 );
         board = new Board(BOARD_SIZE, BOARD_SIZE);
@@ -34,6 +37,12 @@ public class Gomoku extends GameController {
         setGAME_NAME(GAME_NAME);
     }
 
+    /**
+     * Checks if the game is over
+     * A game is over if a player has aligned 5 symbols or if it is a draw
+     *
+     * @return boolean true if the game ended, false if it is still continuing
+     */
     @Override
     public boolean isOver() {
         int symbolsRequired = 5;
@@ -59,6 +68,10 @@ public class Gomoku extends GameController {
         }
     }
 
+    /**
+     * Game engine for Gomoku
+     * Handles player turns and updates the board until the game is over
+     */
     @Override
     public void play() {
         view.messageBeginningOfTheGameGomoku();

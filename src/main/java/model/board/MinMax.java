@@ -106,7 +106,9 @@ public class MinMax {
         }
     }
 
-    // loops over empty cells, uses minmax algorithm, picks the best move
+    /**
+     * Loops over empty cells, uses minmax algorithm, picks the best move
+     */
     public Coord getBestMove(Cell[][] table, Player artificialPlayer, Player opponent) {
         int bestValue = Integer.MIN_VALUE;
         Coord bestMove = null;

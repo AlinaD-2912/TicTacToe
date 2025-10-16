@@ -14,6 +14,12 @@ package model.player;
 
 public class HumanPlayer extends Player {
 
+    /**
+     * Constructor of HumanPlayer
+     * Initializes the human player with a given representation
+     *
+     * @param representation the symbol or token used to represent the player on the board
+     */
     public HumanPlayer(String representation) {
         super(representation);
     }

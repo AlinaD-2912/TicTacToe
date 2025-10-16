@@ -22,12 +22,23 @@ public class UserInteraction {
     public UserInteraction(){
         scanner = new Scanner(System.in);
     }
- 
+
+    /**
+     *  Reads an integer from user input
+     *
+     *  @return the integer entered by the user
+     */
     public int userInputInt() {
         int input = scanner.nextInt();
         return input;
     }
 
+
+    /**
+     *  Reads a string from user input
+     *
+     *  @return the string entered by the user
+     */
     public String userInputString() {
         String input = scanner.nextLine();
         return input;

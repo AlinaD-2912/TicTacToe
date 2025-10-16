@@ -24,10 +24,17 @@ public class View {
     public static final String ANSI_WHITE = "\u001B[37m";
 
 
+    /**
+     * Default constructor
+     */
     public View(){
 
     }
 
+
+    /**
+     * Displays the main menu at the beginning of the game
+     */
     public void messageBeginningOfTheGame() {
         System.out.println(ANSI_YELLOW + "============= Welcome ! =============" + ANSI_RESET);
         System.out.println(ANSI_VIOLET + "---------------------------------------" + ANSI_RESET);
@@ -39,6 +46,10 @@ public class View {
         System.out.println(ANSI_YELLOW + "So what do you prefer (1,2 or 3): " + ANSI_RESET);
     }
 
+
+    /**
+     * Displays the menu for TicTacToe at the beginning of the game
+     */
     public void messageBeginningOfTheGameTicTacToe () {
         System.out.println( ANSI_YELLOW + "======= Welcome to Tic-Tac-Toe! =======" + ANSI_RESET);
         System.out.println(ANSI_GREEN + "---------------------------------------");
@@ -50,23 +61,47 @@ public class View {
         System.out.println("So what do you prefer (1,2 or 3): " + ANSI_RESET);
     }
 
+
+    /**
+     * Prompts the user to pick the X coordinate
+     */
     public void pickXCoordinate() {
         System.out.println(ANSI_YELLOW + "Pick the coordinate for x (0,1,2...): " + ANSI_RESET);
     }
 
+
+    /**
+     * Prompts the user to pick the Y coordinate
+     */
     public void pickYCoordinate() {
         System.out.println(ANSI_YELLOW + "Pick the coordinate for y (0,1,2...): " + ANSI_RESET);
     }
 
+
+    /**
+     * Prompts the user to pick a representation for their player
+     */
     public void pickPlayerRepresentation() {
         System.out.println(ANSI_GREEN + "Pick (X or O): " + ANSI_RESET);
     }
 
+
+    /**
+     * Displays warnings based on input error code
+     *
+     * @param nb the index of the warning message
+     */
     public void warnings (int nb) {
         String [] warnings = {"Invalid Input. Please try again.", "x out of range", "y out of range", "The cell is already occupied"};
         System.out.println(warnings[nb]);
     }
 
+
+    /**
+     * Displays the game over message according to the outcome
+     *
+     * @param message an integer representing the type of game over (draw or player win)
+     */
     public void gameOverMessage (int message) {
         System.out.println("\n----- GAME OVER -----");
 

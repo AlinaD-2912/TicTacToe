@@ -16,6 +16,10 @@ import view.View;
 
 public class GameLauncher {
 
+    /**
+     * Starts the game launcher
+     * Displays the menu, reads user input, and launches the corresponding game
+     */
     public void start() {
         View view = new View();
         UserInteraction interaction = new UserInteraction();

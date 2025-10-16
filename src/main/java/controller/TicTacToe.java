@@ -15,11 +15,12 @@
 package controller;
 
 import model.board.Board;
+import model.design_pattern.Visitor;
 import model.player.ArtificialPlayer;
 import model.player.HumanPlayer;
 import view.View;
 
-public class TicTacToe extends GameController {
+public class TicTacToe extends GameController implements Visitor {
 
     private int BOARD_SIZE = 3;
     private String GAME_NAME = "TicTacToe";
@@ -35,7 +36,7 @@ public class TicTacToe extends GameController {
     private UserInteraction userInteraction;
 
     public TicTacToe() {
-        super(3,3 );
+        super(3, 3);
         board = new Board(BOARD_SIZE, BOARD_SIZE);
         view = new View();
         userInteraction = new UserInteraction();
@@ -43,7 +44,7 @@ public class TicTacToe extends GameController {
     }
 
     /**
-     *  Game engine
+     * Game engine
      */
     @Override
     public void play() {
@@ -61,7 +62,7 @@ public class TicTacToe extends GameController {
     }
 
     /**
-     *  Game over
+     * Game over
      */
     @Override
     public boolean isOver() {
@@ -69,27 +70,17 @@ public class TicTacToe extends GameController {
         Board.gameState result = board.gameState(symbolRequired);
 
         switch (result) {
-            case Draw -> {
-                setState(State.DRAW);
-                view.gameOverMessage(1);
-                board.display();
-                return true;
-            }
-            case Player_O_Won, Player_X_Won -> {
-                setState(State.PLAYER_WON);
-                view.gameOverMessage(2);
-                board.display();
-                return true;
-            }
-            default -> {
-                setState(State.CONTINUING);
-                return false;
-            }
+            case Draw -> setState(State.DRAW);
+            case Player_O_Won, Player_X_Won -> setState(State.PLAYER_WON);
+            default -> setState(State.CONTINUING);
         }
+
+        return getState() != State.CONTINUING;
     }
 
+
     /**
-     *  2 human players mode
+     * 2 human players mode
      */
     public void twoHumanPlayers() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
@@ -106,7 +97,7 @@ public class TicTacToe extends GameController {
     }
 
     /**
-     *  1 human vs 1 artificial player
+     * 1 human vs 1 artificial player
      */
     public void humanVsArtificialPlayer() {
         currentPlayer = (HumanPlayer) board.getPlayerRepresentation(true);
@@ -131,7 +122,7 @@ public class TicTacToe extends GameController {
     }
 
     /**
-     *  artificial vs artificial player
+     * artificial vs artificial player
      */
     public void artificialVsArtificial() {
         ArtificialPlayer ai1 = new ArtificialPlayer("X");
@@ -160,9 +151,27 @@ public class TicTacToe extends GameController {
     public void setX(int x) {
         this.BOARD_SIZE = x;
     }
+
     @Override
     public void setY(int y) {
         this.BOARD_SIZE = y;
     }
 
+    @Override
+    public void visitContinuing(GameController game) {
+    }
+
+    @Override
+    public void visitPlayerWon(GameController game) {
+        TicTacToe ttt = (TicTacToe) game;
+        ttt.board.display();
+        game.getView().gameOverMessage(2);
+    }
+
+    @Override
+    public void visitDraw(GameController game) {
+        TicTacToe ttt = (TicTacToe) game;
+        ttt.board.display();
+        game.getView().gameOverMessage(1);
+    }
 }
