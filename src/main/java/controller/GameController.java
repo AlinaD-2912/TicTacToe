@@ -87,6 +87,11 @@ public abstract class GameController {
         }
     }
 
+    public void setView(View view) {
+        this.view = view;
+    }
+
+
     public State getState() {
         return currentState;
     }

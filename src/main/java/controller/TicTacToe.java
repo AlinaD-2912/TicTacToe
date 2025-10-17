@@ -41,6 +41,9 @@ public class TicTacToe extends GameController implements Visitor {
         view = new View();
         userInteraction = new UserInteraction();
         setGAME_NAME(GAME_NAME);
+
+        super.setView(view);
+        super.setVisitor(this);
     }
 
     /**
@@ -70,13 +73,23 @@ public class TicTacToe extends GameController implements Visitor {
         Board.gameState result = board.gameState(symbolRequired);
 
         switch (result) {
-            case Draw -> setState(State.DRAW);
-            case Player_O_Won, Player_X_Won -> setState(State.PLAYER_WON);
-            default -> setState(State.CONTINUING);
+            case Draw -> {
+                setState(State.DRAW);
+                visitDraw(this);
+            }
+            case Player_O_Won, Player_X_Won -> {
+                setState(State.PLAYER_WON);
+                visitPlayerWon(this);
+            }
+            default -> {
+                setState(State.CONTINUING);
+                visitContinuing(this);
+            }
         }
 
         return getState() != State.CONTINUING;
     }
+
 
 
     /**

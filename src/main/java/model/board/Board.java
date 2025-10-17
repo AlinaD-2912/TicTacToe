@@ -98,7 +98,7 @@ public class Board {
      */
     public Player getPlayerRepresentation(boolean isHuman) {
 
-        if (currentPlayer == null) throw new IllegalStateException("Current player not initialized");
+//        if (currentPlayer == null) throw new IllegalStateException("Current player not initialized");
         // check user input
         if (isHuman) {
             view.pickPlayerRepresentation();
