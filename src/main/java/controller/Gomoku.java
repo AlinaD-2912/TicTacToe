@@ -20,6 +20,7 @@ import view.View;
 public class Gomoku extends GameController implements Strategy {
 
     private int BOARD_SIZE = 15;
+    private int symbolsAligned = 5;
     private String GAME_NAME;
     private Board board;
     private HumanPlayer currentPlayer;
@@ -31,7 +32,7 @@ public class Gomoku extends GameController implements Strategy {
      */
     public Gomoku() {
         super(15,15 );
-        board = new Board(BOARD_SIZE, BOARD_SIZE);
+        board = new Board(BOARD_SIZE, BOARD_SIZE, this);
         view = new View();
         currentPlayer = new HumanPlayer("");
         setState(State.CONTINUING);
@@ -46,8 +47,7 @@ public class Gomoku extends GameController implements Strategy {
      */
     @Override
     public boolean isOver() {
-        int symbolsRequired = 5;
-        Board.gameState result = board.gameState(symbolsRequired);
+        Board.gameState result = board.gameState();
 
         switch (result) {
             case Draw -> {
@@ -67,6 +67,11 @@ public class Gomoku extends GameController implements Strategy {
                 return false;
             }
         }
+    }
+
+    @Override
+    public int getSymbolsAlignedRequired() {
+        return symbolsAligned;
     }
 
     /**

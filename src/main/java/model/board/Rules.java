@@ -21,9 +21,9 @@ public class Rules {
     /**
      *  Checks the fullness of the board
      */
-    public boolean isBoardFull(int size, Cell[][] table) {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+    public boolean isBoardFull(int sizeX, int sizeY, Cell[][] table) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 if (table[i][j].getRepresentation().equals(" ")) {
                     return false;
                 }
@@ -31,6 +31,7 @@ public class Rules {
         }
         return true;
     }
+
 
     /**
      *  Finds alignments horizontally, vertically and by diagonals

@@ -24,6 +24,7 @@ import view.View;
 public class TicTacToe extends GameController implements Visitor, Strategy {
 
     private int BOARD_SIZE = 3;
+    private int symbolsAligned = 3;
     private String GAME_NAME = "TicTacToe";
     private int gameMode;
 
@@ -38,7 +39,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
 
     public TicTacToe() {
         super(3, 3);
-        board = new Board(BOARD_SIZE, BOARD_SIZE);
+        board = new Board(BOARD_SIZE, BOARD_SIZE, this);
         view = new View();
         userInteraction = new UserInteraction();
         setGAME_NAME(GAME_NAME);
@@ -70,8 +71,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
      */
     @Override
     public boolean isOver() {
-        int symbolRequired = 3;
-        Board.gameState result = board.gameState(symbolRequired);
+        Board.gameState result = board.gameState();
 
         switch (result) {
             case Draw -> {
@@ -91,6 +91,10 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
         return getState() != State.CONTINUING;
     }
 
+    @Override
+    public int getSymbolsAlignedRequired() {
+        return symbolsAligned;
+    }
 
 
     /**

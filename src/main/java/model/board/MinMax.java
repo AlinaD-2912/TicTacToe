@@ -22,14 +22,18 @@ import java.util.List;
 
 public class MinMax {
 
-    private static final int MAX_DEPTH = 6;
+    private int MAX_DEPTH = 6;
     private Rules rules;
-    private Board board;
-    private int size = 3;
+    private int sizeX;
+    private int sizeY;
+    private int alignToWin;
 
-    public MinMax() {
+
+    public MinMax(int sizeX, int sizeY, int alignToWin) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.alignToWin = alignToWin;
         this.rules = new Rules();
-        board = new Board(3, 3);
     }
 
 
@@ -53,8 +57,8 @@ public class MinMax {
      * Explores all possible moves, simulates the player response, returns score
      */
     private int miniMax(Cell[][] table, int depth, boolean isMaximizing, Player artificialPlayer, Player opponent) {
-        Cell winner = rules.findAlignedCells(table, board.getSizeX(), board.getSizeY(), size);
-        if (winner != null) {
+        Cell winner = rules.findAlignedCells(table, sizeX, sizeY, alignToWin);
+            if (winner != null) {
             if (winner.getRepresentation().equals(artificialPlayer.getRepresentation())) {
                 return 99;
             } else {
@@ -62,13 +66,13 @@ public class MinMax {
             }
         }
 
-        if (depth == 0 || rules.isBoardFull(size, table)) {
+        if (depth == 0 || rules.isBoardFull(sizeX, sizeY, table))  {
             return 0;
         }
 
         List<Coord> coords = new ArrayList<>();
-        for (int i = 0; i < board.getSizeX(); i++) {
-            for (int j = 0; j < board.getSizeY(); j++) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 if (table[i][j].isEmpty()) {
                     coords.add(new Coord(i, j));
                 }
@@ -114,8 +118,8 @@ public class MinMax {
         Coord bestMove = null;
 
         List<Coord> moves = new ArrayList<>();
-        for (int i = 0; i < board.getSizeX(); i++) {
-            for (int j = 0; j < board.getSizeY(); j++) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 if (table[i][j].isEmpty()) {
                     moves.add(new Coord(i, j));
                 }

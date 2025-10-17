@@ -22,6 +22,7 @@ public class Connect4 extends GameController implements Strategy {
 
     private int x = 6;
     private int y = 7;
+    private int symbolsAligned = 4;
     private String GAME_NAME = "Connect4";
     private Board board;
     private HumanPlayer currentPlayer;
@@ -34,7 +35,7 @@ public class Connect4 extends GameController implements Strategy {
      */
     public Connect4() {
         super(6,7 );
-        board = new Board(x, y);
+        board = new Board(x, y, this);
         view = new View();
         interactionUtilisateur = new UserInteraction();
         currentPlayer = new HumanPlayer("");
@@ -51,8 +52,7 @@ public class Connect4 extends GameController implements Strategy {
      */
     @Override
     public boolean isOver() {
-        int symbolsRequired = 4;
-        Board.gameState result = board.gameState(symbolsRequired);
+        Board.gameState result = board.gameState();
 
         switch (result) {
             case Draw -> {
@@ -72,6 +72,11 @@ public class Connect4 extends GameController implements Strategy {
                 return false;
             }
         }
+    }
+
+    @Override
+    public int getSymbolsAlignedRequired() {
+        return symbolsAligned;
     }
 
 

@@ -16,6 +16,7 @@
 package model.board;
 
 import controller.UserInteraction;
+import model.design_pattern.Strategy;
 import model.player.ArtificialPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
@@ -27,6 +28,7 @@ public class Board {
     private int sizeY;
     private int x;
     private int y;
+
     public enum gameState { Draw, Player_X_Won, Player_O_Won, Default, Player_WhiteCircle_Won, Player_EmptyCircle_Won, RedCircle_Won, YellowCircle_Won }
 
     private Cell[][] table;
@@ -35,14 +37,17 @@ public class Board {
     private UserInteraction interactionUtilisateur;
     private ArtificialPlayer currentArtificialPlayer;
     private Rules rules;
+    private Strategy currentGame;
 
 
     /**
      * Board initializer and constructor
      */
-    public Board(int sizeX, int sizeY) {
+    public Board(int sizeX, int sizeY, Strategy currentGame) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        this.currentGame = currentGame;
+
         table = new Cell[sizeX][sizeY];
         for (int i = 0; i < sizeX; i++) {
             for (int j = 0; j < sizeY; j++) {
@@ -158,15 +163,14 @@ public class Board {
         }
 
         if (gameMode == 2) {
-            MinMax aiLogic = new MinMax();
+            MinMax aiLogic = new MinMax(sizeX, sizeY, currentGame.getSymbolsAlignedRequired());
             Player aiPlayer = currentArtificialPlayer;
             Player opponent = currentPlayer;
 
             Coord bestMoveCoord = aiLogic.getBestMove(table, aiPlayer, opponent);
-            int[] bestMove = {bestMoveCoord.row(), bestMoveCoord.col()};
-            return bestMove;
-
+            return new int[]{bestMoveCoord.row(), bestMoveCoord.col()};
         }
+
         return null;
     }
 
@@ -249,31 +253,25 @@ public class Board {
     /**
      * Returns current state of the game
      */
-    public gameState gameState (int symbolsAlignedRequired) {
-        rules =  new Rules();
+    public gameState gameState() {
+        int symbolsAlignedRequired = currentGame.getSymbolsAlignedRequired(); // dynamic now
+        rules = new Rules();
         Cell result = rules.findAlignedCells(table, sizeX, sizeY, symbolsAlignedRequired);
+
         if (result != null && !result.isEmpty()) {
             String winner = result.getRepresentation();
-            if (winner.equals("X")) {
-                return gameState.Player_X_Won;
-            } else if (winner.equals("O")) {
-                return gameState.Player_O_Won;
-            }else if (winner.equals("●")) {
-                return gameState.Player_WhiteCircle_Won;
-            }else if (winner.equals("○")) {
-                return gameState.Player_EmptyCircle_Won;
-            }
-            else if (winner.equals("\u001B[31m●\u001B[0m")) {
-                return gameState.RedCircle_Won;
-            }else if (winner.equals("\u001B[33m●\u001B[0m")) {
-                return gameState.YellowCircle_Won;
+            switch (winner) {
+                case "X" -> { return gameState.Player_X_Won; }
+                case "O" -> { return gameState.Player_O_Won; }
+                case "●" -> { return gameState.Player_WhiteCircle_Won; }
+                case "○" -> { return gameState.Player_EmptyCircle_Won; }
+                case "\u001B[31m●\u001B[0m" -> { return gameState.RedCircle_Won; }
+                case "\u001B[33m●\u001B[0m" -> { return gameState.YellowCircle_Won; }
             }
         }
-        if (rules.isBoardFull(sizeX, table) ) {
+
+        if (rules.isBoardFull(sizeX, sizeY, table)) {
             return gameState.Draw;
-        }
-        if (symbolsAlignedRequired <= 0) {
-            throw new IllegalArgumentException("symbolsAlignedRequired must be >= 1");
         }
 
         return gameState.Default;
