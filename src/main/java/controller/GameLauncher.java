@@ -12,6 +12,7 @@
 
 package controller;
 
+import model.design_pattern.Strategy;
 import view.View;
 
 public class GameLauncher {
@@ -27,11 +28,22 @@ public class GameLauncher {
         view.messageBeginningOfTheGame();
         int input = interaction.userInputInt();
 
+        Strategy selectedGame;
+
         switch (input) {
-            case 1 -> new TicTacToe().play();
-            case 2 -> new Gomoku().play();
-            case 3 -> new Connect4().play();
-            default -> view.warnings(0);
+            case 1:
+                selectedGame = new TicTacToe();
+                break;
+            case 2:
+                selectedGame = new Gomoku();
+                break;
+            case 3:
+                selectedGame = new Connect4();
+            default:
+                view.warnings(0);
+                return;
         }
+        selectedGame.play();
+
     }
 }

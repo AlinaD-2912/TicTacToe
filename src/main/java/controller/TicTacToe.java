@@ -15,12 +15,13 @@
 package controller;
 
 import model.board.Board;
+import model.design_pattern.Strategy;
 import model.design_pattern.Visitor;
 import model.player.ArtificialPlayer;
 import model.player.HumanPlayer;
 import view.View;
 
-public class TicTacToe extends GameController implements Visitor {
+public class TicTacToe extends GameController implements Visitor, Strategy {
 
     private int BOARD_SIZE = 3;
     private String GAME_NAME = "TicTacToe";

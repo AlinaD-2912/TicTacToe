@@ -14,10 +14,11 @@
 package controller;
 
 import model.board.Board;
+import model.design_pattern.Strategy;
 import model.player.HumanPlayer;
 import view.View;
 
-public class Connect4 extends GameController {
+public class Connect4 extends GameController implements Strategy {
 
     private int x = 6;
     private int y = 7;

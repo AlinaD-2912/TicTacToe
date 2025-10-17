@@ -13,10 +13,11 @@
 
 package controller;
 import model.board.Board;
+import model.design_pattern.Strategy;
 import model.player.HumanPlayer;
 import view.View;
 
-public class Gomoku extends GameController {
+public class Gomoku extends GameController implements Strategy {
 
     private int BOARD_SIZE = 15;
     private String GAME_NAME;
