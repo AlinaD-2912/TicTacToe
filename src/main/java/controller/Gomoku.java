@@ -25,6 +25,7 @@ public class Gomoku extends GameController implements Strategy {
     private Board board;
     private HumanPlayer currentPlayer;
     private View view;
+    private boolean gameEnded = false;
 
     /**
      * Constructor of Gomoku
@@ -48,7 +49,7 @@ public class Gomoku extends GameController implements Strategy {
     @Override
     public boolean isOver() {
         Board.gameState result = board.gameState();
-
+        if (gameEnded) return true;
         switch (result) {
             case Draw -> {
                 setState(State.DRAW);

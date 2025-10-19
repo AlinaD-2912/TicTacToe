@@ -28,6 +28,7 @@ public class Connect4 extends GameController implements Strategy {
     private HumanPlayer currentPlayer;
     private View view;
     private UserInteraction interactionUtilisateur;
+    private boolean gameEnded = false;
 
     /**
      * Constructor of Connect4
@@ -53,7 +54,7 @@ public class Connect4 extends GameController implements Strategy {
     @Override
     public boolean isOver() {
         Board.gameState result = board.gameState();
-
+        if (gameEnded) return true;
         switch (result) {
             case Draw -> {
                 setState(State.DRAW);

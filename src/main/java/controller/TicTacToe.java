@@ -27,6 +27,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
     private int symbolsAligned = 3;
     private String GAME_NAME = "TicTacToe";
     private int gameMode;
+    private boolean gameEnded = false;
 
     // models
     private Board board;
@@ -71,25 +72,32 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
      */
     @Override
     public boolean isOver() {
+        if (gameEnded) return true;
+
         Board.gameState result = board.gameState();
+
+        if (result == Board.gameState.Draw || result == Board.gameState.Player_O_Won || result == Board.gameState.Player_X_Won) {
+            gameEnded = true;
+        }
 
         switch (result) {
             case Draw -> {
-                setState(State.DRAW);
-                visitDraw(this);
+                if (getState() != State.DRAW) {
+                    setState(State.DRAW);
+                }
             }
             case Player_O_Won, Player_X_Won -> {
-                setState(State.PLAYER_WON);
-                visitPlayerWon(this);
+                if (getState() != State.PLAYER_WON) {
+                    setState(State.PLAYER_WON);
+                }
             }
-            default -> {
-                setState(State.CONTINUING);
-                visitContinuing(this);
-            }
+            default -> setState(State.CONTINUING);
         }
 
-        return getState() != State.CONTINUING;
+        return gameEnded;
     }
+
+
 
     @Override
     public int getSymbolsAlignedRequired() {
@@ -110,7 +118,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             board.setOwner(move[0], move[1], currentPlayer);
             board.switchPlayers(1);
 
-            isOver(); // updates the state
+            if (isOver()) break;
         }
     }
 
@@ -135,7 +143,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             board.setOwner(moveArtificialPlayer[0], moveArtificialPlayer[1], currentArtificialPlayer);
             board.switchPlayers(2);
 
-            isOver();
+            if (isOver()) break;
         }
     }
 
@@ -160,7 +168,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
                 currentArtificialPlayer = ai1;
             }
 
-            isOver();
+            if (isOver()) break;
         }
     }
 

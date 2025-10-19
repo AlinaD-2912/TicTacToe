@@ -102,12 +102,8 @@ public class Board {
      * Gets player representation (X or O)
      */
     public Player getPlayerRepresentation(boolean isHuman) {
-
-//        if (currentPlayer == null) throw new IllegalStateException("Current player not initialized");
         // check user input
         if (isHuman) {
-            view.pickPlayerRepresentation();
-            //loop on user input
             while (true) {
                 view.pickPlayerRepresentation();
                 String userInput = interactionUtilisateur.userInputString();
@@ -116,7 +112,6 @@ public class Board {
                     break;
                 } else {
                     view.warnings(0);
-                    view.pickPlayerRepresentation();
                 }
             }
             return currentPlayer;
