@@ -23,7 +23,7 @@ Créer une **collection de jeux de plateau** en Java console avec :
 
 - Java 17+
 - Programmation orientée objet (POO)
-- Design patterns : **Visitor**, **State**
+- Design patterns : **Visitor**, **Strategy**
 - Console Java pour l’interface utilisateur
 
 ## Lancer le projet localement
