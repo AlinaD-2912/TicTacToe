@@ -72,11 +72,6 @@ public class Connect4 extends GameController implements Strategy {
         }
     }
 
-    @Override
-    public int getSymbolsAlignedRequired() {
-        return symbolsAligned;
-    }
-
 
     /**
      * Game engine for Connect4
@@ -100,6 +95,7 @@ public class Connect4 extends GameController implements Strategy {
         }
     }
 
+    // setters
     @Override
     public void setX(int x) {
         this.x = x;
@@ -113,4 +109,10 @@ public class Connect4 extends GameController implements Strategy {
         this.GAME_NAME = s;
     }
 
+
+    // Strategy function
+    @Override
+    public int getSymbolsAlignedRequired() {
+        return symbolsAligned;
+    }
 }

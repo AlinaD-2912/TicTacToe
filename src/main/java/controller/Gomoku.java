@@ -26,6 +26,7 @@ public class Gomoku extends GameController implements Strategy {
     private HumanPlayer currentPlayer;
     private View view;
 
+
     /**
      * Constructor of Gomoku
      * Initializes the board, view, current player, and sets the game state to CONTINUING
@@ -38,6 +39,7 @@ public class Gomoku extends GameController implements Strategy {
         setState(State.CONTINUING);
         setGAME_NAME(GAME_NAME);
     }
+
 
     /**
      * Checks if the game is over
@@ -68,10 +70,6 @@ public class Gomoku extends GameController implements Strategy {
         }
     }
 
-    @Override
-    public int getSymbolsAlignedRequired() {
-        return symbolsAligned;
-    }
 
     /**
      * Game engine for Gomoku
@@ -94,6 +92,7 @@ public class Gomoku extends GameController implements Strategy {
         }
     }
 
+    // Setters
     @Override
     public void setX(int x) {
         this.BOARD_SIZE = x;
@@ -107,6 +106,12 @@ public class Gomoku extends GameController implements Strategy {
         this.GAME_NAME = s;
     }
 
+
+    // Strategy function
+    @Override
+    public int getSymbolsAlignedRequired() {
+        return symbolsAligned;
+    }
 
 
 

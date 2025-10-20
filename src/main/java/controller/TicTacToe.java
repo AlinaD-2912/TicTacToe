@@ -49,6 +49,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
         super.setVisitor(this);
     }
 
+
     /**
      * Game engine
      */
@@ -66,6 +67,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             view.warnings(0);
         }
     }
+
 
     /**
      * Game over
@@ -93,10 +95,6 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
     }
 
 
-
-
-
-
     /**
      * 2 human players mode
      */
@@ -113,6 +111,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             if (isOver()) break;
         }
     }
+
 
     /**
      * 1 human vs 1 artificial player
@@ -138,6 +137,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             if (isOver()) break;
         }
     }
+
 
     /**
      * artificial vs artificial player
