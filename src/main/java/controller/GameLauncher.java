@@ -39,6 +39,7 @@ public class GameLauncher {
                 break;
             case 3:
                 selectedGame = new Connect4();
+                break;
             default:
                 view.warnings(0);
                 return;
