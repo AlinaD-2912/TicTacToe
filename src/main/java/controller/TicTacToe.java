@@ -15,10 +15,12 @@
 package controller;
 
 import model.board.Board;
+import model.board.GameMode;
 import model.design_pattern.Strategy;
 import model.design_pattern.Visitor;
 import model.player.ArtificialPlayer;
 import model.player.HumanPlayer;
+import view.ErrorCode;
 import view.View;
 
 public class TicTacToe extends GameController implements Visitor, Strategy {
@@ -64,7 +66,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
         } else if (gameMode == 3) {
             artificialVsArtificial();
         } else {
-            view.warnings(0);
+            view.warnings(ErrorCode.InvalidInput);
         }
     }
 
@@ -90,7 +92,6 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             }
             default -> setState(State.CONTINUING);
         }
-
         return false;
     }
 
@@ -104,9 +105,9 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
 
         while (getState() == State.CONTINUING) {
             board.display();
-            int[] move = board.getMoveFromPlayer(1);
+            int[] move = board.getMoveFromPlayer(GameMode.HumanMove);
             board.setOwner(move[0], move[1], currentPlayer);
-            board.switchPlayers(1);
+            board.switchPlayers(GameMode.HumanVSHuman);
 
             if (isOver()) break;
         }
@@ -123,16 +124,16 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
 
         while (getState() == State.CONTINUING) {
             board.display();
-            int[] movePlayer = board.getMoveFromPlayer(1);
+            int[] movePlayer = board.getMoveFromPlayer(GameMode.HumanMove);
             board.setOwner(movePlayer[0], movePlayer[1], currentPlayer);
-            board.switchPlayers(2);
+            board.switchPlayers(GameMode.HumanVSArtificial);
 
             isOver();
             if (getState() != State.CONTINUING) break;
 
-            int[] moveArtificialPlayer = board.getMoveFromPlayer(2);
+            int[] moveArtificialPlayer = board.getMoveFromPlayer(GameMode.ArtificialMove);
             board.setOwner(moveArtificialPlayer[0], moveArtificialPlayer[1], currentArtificialPlayer);
-            board.switchPlayers(2);
+            board.switchPlayers(GameMode.HumanVSArtificial);
 
             if (isOver()) break;
         }
@@ -150,9 +151,9 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
 
         while (getState() == State.CONTINUING) {
             board.display();
-            int[] move = board.getMoveFromPlayer(2);
+            int[] move = board.getMoveFromPlayer(GameMode.ArtificialMove);
             board.setOwner(move[0], move[1], currentArtificialPlayer);
-            board.switchPlayers(3);
+            board.switchPlayers(GameMode.ArtificialVSArtificial);
 
             if (currentArtificialPlayer == ai1) {
                 currentArtificialPlayer = ai2;

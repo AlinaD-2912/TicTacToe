@@ -89,11 +89,16 @@ public class View {
     /**
      * Displays warnings based on input error code
      *
-     * @param nb the index of the warning message
+     * @param code the index of the warning message
      */
-    public void warnings (int nb) {
-        String [] warnings = {"Invalid Input. Please try again.", "x out of range", "y out of range", "The cell is already occupied"};
-        System.out.println(warnings[nb]);
+    public void warnings (ErrorCode code) {
+        String message = switch (code) {
+            case InvalidInput -> "Invalid Input. Please try again.";
+            case XOutOfRange -> "X out of range";
+            case YOutOfRange -> "Y out of range";
+            case CellOccupied -> "The cell is already occupied";
+        };
+        System.out.println(message);
     }
 
 

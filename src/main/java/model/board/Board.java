@@ -20,6 +20,7 @@ import model.design_pattern.Strategy;
 import model.player.ArtificialPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
+import view.ErrorCode;
 import view.View;
 
 public class Board {
@@ -104,16 +105,18 @@ public class Board {
     public Player getPlayerRepresentation(boolean isHuman) {
         // check user input
         if (isHuman) {
-            while (true) {
+            boolean isValid = false;
+            // no infinitive loop
+            do {
                 view.pickPlayerRepresentation();
                 String userInput = interactionUtilisateur.userInputString();
                 if (userInput.equals("X") || userInput.equals("O")) {
                     currentPlayer = new HumanPlayer(userInput);
-                    break;
+                    isValid = true;
                 } else {
-                    view.warnings(0);
+                    view.warnings(ErrorCode.InvalidInput);
                 }
-            }
+            } while (!isValid);
             return currentPlayer;
         }
         else {
@@ -122,7 +125,8 @@ public class Board {
             }
             else {
                 currentArtificialPlayer.setRepresentation("X");
-            }return currentArtificialPlayer;
+            }
+            return currentArtificialPlayer;
         }
     }
 
@@ -130,37 +134,48 @@ public class Board {
     /**
      * Cheks the coordinates chosen by player, and decides if he can move there
      */
-    public int[] getMoveFromPlayer (int gameMode) {
-        if (gameMode == 1) {
+    public int[] getMoveFromPlayer (GameMode gameMode) {
+        if (gameMode == GameMode.HumanMove) {
             //loop on coordinates
             while (true) {
-                view.pickXCoordinate();
-                x = interactionUtilisateur.userInputInt();
-                view.pickYCoordinate();
-                y = interactionUtilisateur.userInputInt();
-                //check x = row
-                if (x < 0 || x >= sizeX) {
-                    view.warnings(1);
-                    continue;
+                // replaced continue with exceptions and try, catch
+                try {
+                    view.pickXCoordinate();
+                    x = interactionUtilisateur.userInputInt();
+                    view.pickYCoordinate();
+                    y = interactionUtilisateur.userInputInt();
+
+                    //check x = row
+                    if (x < 0 || x >= sizeX) {
+                        view.warnings(ErrorCode.XOutOfRange);
+                        throw new IllegalArgumentException("X out of range");
+                    }
+
+                    //check y = column
+                    if (y < 0 || y >= sizeY) {
+                        view.warnings(ErrorCode.YOutOfRange);
+                        throw new IllegalArgumentException("Y out of range");
+                    }
+
+                    //check if empty
+                    if (table[x][y].getRepresentation().equals("X") || table[x][y].getRepresentation().equals("O")
+                            || table[x][y].getRepresentation().equals("●" ) || table[x][y].getRepresentation().equals("○")
+                            || table[x][y].getRepresentation().equals("\u001B[31m●\u001B[0m" ) || table[x][y].getRepresentation().equals("\u001B[33m●\u001B[0m"))
+                    {
+                        view.warnings(ErrorCode.CellOccupied);
+                        throw new IllegalArgumentException("Cell occupied");
+                    }
+                    return new int[]{x, y};
+                }catch (IllegalArgumentException e) {
+                    // loop continues automatically
+                } catch (Exception e) {
+                    view.warnings(ErrorCode.InvalidInput);
                 }
-                //check y = column
-                if (y < 0 || y >= sizeY) {
-                    view.warnings(2);
-                    continue;
-                }
-                //check if empty
-                if (table[x][y].getRepresentation().equals("X") || table[x][y].getRepresentation().equals("O")
-                        || table[x][y].getRepresentation().equals("●" ) || table[x][y].getRepresentation().equals("○")
-                        || table[x][y].getRepresentation().equals("\u001B[31m●\u001B[0m" ) || table[x][y].getRepresentation().equals("\u001B[33m●\u001B[0m"))
-                {
-                    view.warnings(3);
-                    continue;
-                }
-                return new int[]{x, y};
+
             }
         }
 
-        if (gameMode == 2) {
+        if (gameMode == GameMode.ArtificialMove) {
             MinMax aiLogic = new MinMax(sizeX, sizeY, currentGame.getSymbolsAlignedRequired());
             Player aiPlayer = currentArtificialPlayer;
             Player opponent = currentPlayer;
@@ -188,6 +203,7 @@ public class Board {
         return new int[]{-1, -1};
     }
 
+
     /**
      * Sets the owner of the cell by x,y and chosen player representation
      */
@@ -202,10 +218,10 @@ public class Board {
     /**
      * Players switching
      */
-    public void switchPlayers (int gameMode) {
+    public void switchPlayers (GameMode gameMode) {
         currentArtificialPlayer = new ArtificialPlayer(" ");
         // switch 2 human players
-        if (gameMode == 1) {
+        if (gameMode == GameMode.HumanVSHuman) {
             if (currentPlayer.getRepresentation().equals("X")) {
                 currentPlayer.setRepresentation("O");
             } else {
@@ -213,7 +229,7 @@ public class Board {
             }
         }
         // switch human and artificial players
-        if (gameMode == 2) {
+        if (gameMode == GameMode.HumanVSArtificial) {
             if (currentPlayer.getRepresentation().equals("O")) {
                 currentArtificialPlayer.setRepresentation("X");
             }
@@ -222,7 +238,7 @@ public class Board {
             }
         }
         // switch 2 artificial players
-        if (gameMode == 3) {
+        if (gameMode == GameMode.ArtificialVSArtificial) {
             if (currentArtificialPlayer.getRepresentation().equals("X")) {
                 currentArtificialPlayer.setRepresentation("O");
             } else {
@@ -230,7 +246,7 @@ public class Board {
             }
         }
         // switch players gomoku
-        if (gameMode == 4) {
+        if (gameMode == GameMode.GomokuHumanPlayers) {
             if (currentPlayer.getRepresentation().equals("●")) {
                 currentPlayer.setRepresentation("○");
             }else {
@@ -238,7 +254,7 @@ public class Board {
             }
         }
         // switch players connect4
-        if (gameMode == 5) {
+        if (gameMode == GameMode.Connect4HumanPlayers) {
             if (currentPlayer.getRepresentation().equals("\u001B[31m●\u001B[0m")) {
                 currentPlayer.setRepresentation("\u001B[33m●\u001B[0m");
             }else {
@@ -267,13 +283,12 @@ public class Board {
                 case "\u001B[33m●\u001B[0m" -> { return gameState.YellowCircle_Won; }
             }
         }
-
         if (rules.isBoardFull(sizeX, sizeY, table)) {
             return gameState.Draw;
         }
-
         return gameState.Default;
     }
+
 
     public int getSizeX() {
         return this.sizeX;

@@ -13,6 +13,7 @@
 package controller;
 
 import model.design_pattern.Strategy;
+import view.ErrorCode;
 import view.View;
 
 public class GameLauncher {
@@ -41,7 +42,7 @@ public class GameLauncher {
                 selectedGame = new Connect4();
                 break;
             default:
-                view.warnings(0);
+                view.warnings(ErrorCode.InvalidInput);
                 return;
         }
         selectedGame.play();

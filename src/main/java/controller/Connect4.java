@@ -14,6 +14,7 @@
 package controller;
 
 import model.board.Board;
+import model.board.GameMode;
 import model.design_pattern.Strategy;
 import model.player.HumanPlayer;
 import view.View;
@@ -86,10 +87,10 @@ public class Connect4 extends GameController implements Strategy {
 
         while (getState() == State.CONTINUING) {
             board.display();
-            int[] move = board.getMoveFromPlayer(1);
+            int[] move = board.getMoveFromPlayer(GameMode.HumanMove);
             int[] finalMove = board.findPositionBelow(move);
             board.setOwner(finalMove[0], finalMove[1], currentPlayer);
-            board.switchPlayers(5);
+            board.switchPlayers(GameMode.Connect4HumanPlayers);
 
             isOver();
         }

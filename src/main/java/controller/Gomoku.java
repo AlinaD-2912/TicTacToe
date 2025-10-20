@@ -13,6 +13,7 @@
 
 package controller;
 import model.board.Board;
+import model.board.GameMode;
 import model.design_pattern.Strategy;
 import model.player.HumanPlayer;
 import view.View;
@@ -84,9 +85,9 @@ public class Gomoku extends GameController implements Strategy {
 
         while (getState() == State.CONTINUING) {
             board.display();
-            int[] move = board.getMoveFromPlayer(1);
+            int[] move = board.getMoveFromPlayer(GameMode.HumanMove);
             board.setOwner(move[0], move[1], currentPlayer);
-            board.switchPlayers(4);
+            board.switchPlayers(GameMode.GomokuHumanPlayers);
 
             isOver();
         }
