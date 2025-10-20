@@ -1,6 +1,6 @@
 # 🎲 Console Board Games – Java
 
-Un projet Java regroupant plusieurs jeux de plateau jouables dans la console, dont **TicTacToe**, **Connect4**, et **Gomoku**. Le projet met en œuvre une architecture orientée objet, une logique de jeu générique, et des design patterns (Visitor, State) pour gérer les états des jeux.
+Un projet Java regroupant plusieurs jeux de plateau jouables dans la console, dont **TicTacToe**, **Connect4**, et **Gomoku**. Le projet met en œuvre une architecture orientée objet, une logique de jeu générique, et des design patterns (Visitor, Strategy) pour gérer les états des jeux.
 
 ## Objectif du projet
 
@@ -31,8 +31,8 @@ Créer une **collection de jeux de plateau** en Java console avec :
 ### 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/AlinaD-2912/Console-Board-Games.git
-cd Console-Board-Games
+git clone https://github.com/AlinaD-2912/Board_Games.git
+cd Board_Games
 ```
 ### 2. Compiler le projet
 ```bash
