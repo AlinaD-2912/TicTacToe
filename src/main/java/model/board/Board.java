@@ -149,7 +149,10 @@ public class Board {
                     continue;
                 }
                 //check if empty
-                if (table[x][y].getRepresentation().equals("X") || table[x][y].getRepresentation().equals("O")) {
+                if (table[x][y].getRepresentation().equals("X") || table[x][y].getRepresentation().equals("O")
+                        || table[x][y].getRepresentation().equals("●" ) || table[x][y].getRepresentation().equals("○")
+                        || table[x][y].getRepresentation().equals("\u001B[31m●\u001B[0m" ) || table[x][y].getRepresentation().equals("\u001B[33m●\u001B[0m"))
+                {
                     view.warnings(3);
                     continue;
                 }
