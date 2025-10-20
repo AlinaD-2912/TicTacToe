@@ -28,7 +28,9 @@ public class MinMax {
     private int sizeY;
     private int alignToWin;
 
-
+    /**
+     *  MinMzx constructor
+     */
     public MinMax(int sizeX, int sizeY, int alignToWin) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -70,6 +72,7 @@ public class MinMax {
             return 0;
         }
 
+        // store the coordinates
         List<Coord> coords = new ArrayList<>();
         for (int i = 0; i < sizeX; i++) {
             for (int j = 0; j < sizeY; j++) {
@@ -79,6 +82,7 @@ public class MinMax {
             }
         }
 
+        // mix the coordinates
         Collections.shuffle(coords);
 
         // artificial player's turn
@@ -130,7 +134,7 @@ public class MinMax {
         Collections.shuffle(moves);
 
         for (Coord move : moves) {
-            // Create a deep copy for this simulation
+            // Create a copy of cell[][] for this simulation
             Cell[][] simulationBoard = createCopyOfBoard(table);
 
             int i = move.row();

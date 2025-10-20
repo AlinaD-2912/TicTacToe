@@ -5,7 +5,7 @@
  *              it determines in which way and order the board functions will be used, has 3 different modes of game,
  *              and inherits the same abstract functions from it's parent class
  *
- * Version: 1.0
+ * Version: 3.0
  *
  * Date: 13/10/2025
  *
@@ -27,7 +27,7 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
     private int symbolsAligned = 3;
     private String GAME_NAME = "TicTacToe";
     private int gameMode;
-    private boolean gameEnded = false;
+
 
     // models
     private Board board;
@@ -72,13 +72,8 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
      */
     @Override
     public boolean isOver() {
-        if (gameEnded) return true;
 
         Board.gameState result = board.gameState();
-
-        if (result == Board.gameState.Draw || result == Board.gameState.Player_O_Won || result == Board.gameState.Player_X_Won) {
-            gameEnded = true;
-        }
 
         switch (result) {
             case Draw -> {
@@ -94,15 +89,12 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             default -> setState(State.CONTINUING);
         }
 
-        return gameEnded;
+        return false;
     }
 
 
 
-    @Override
-    public int getSymbolsAlignedRequired() {
-        return symbolsAligned;
-    }
+
 
 
     /**
@@ -172,21 +164,21 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
         }
     }
 
-
+    // setters
     @Override
     public void setX(int x) {
         this.BOARD_SIZE = x;
     }
-
     @Override
     public void setY(int y) {
         this.BOARD_SIZE = y;
     }
 
+
+    // Visitor functions
     @Override
     public void visitContinuing(GameController game) {
     }
-
     @Override
     public void visitPlayerWon(GameController game) {
         TicTacToe ttt = (TicTacToe) game;
@@ -199,11 +191,17 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
             game.getView().gameOverMessage(2);  // Player O Won
         }
     }
-
     @Override
     public void visitDraw(GameController game) {
         TicTacToe ttt = (TicTacToe) game;
         ttt.board.display();
         game.getView().gameOverMessage(1);
+    }
+
+
+    // Strategy function
+    @Override
+    public int getSymbolsAlignedRequired() {
+        return symbolsAligned;
     }
 }

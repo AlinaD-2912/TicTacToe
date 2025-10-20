@@ -249,7 +249,7 @@ public class Board {
      * Returns current state of the game
      */
     public gameState gameState() {
-        int symbolsAlignedRequired = currentGame.getSymbolsAlignedRequired(); // dynamic now
+        int symbolsAlignedRequired = currentGame.getSymbolsAlignedRequired();
         rules = new Rules();
         Cell result = rules.findAlignedCells(table, sizeX, sizeY, symbolsAlignedRequired);
 
