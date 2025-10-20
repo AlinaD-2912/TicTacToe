@@ -191,7 +191,13 @@ public class TicTacToe extends GameController implements Visitor, Strategy {
     public void visitPlayerWon(GameController game) {
         TicTacToe ttt = (TicTacToe) game;
         ttt.board.display();
-        game.getView().gameOverMessage(2);
+
+        Board.gameState result = ttt.board.gameState();
+        if (result == Board.gameState.Player_X_Won) {
+            game.getView().gameOverMessage(3);  // Player X Won
+        } else if (result == Board.gameState.Player_O_Won) {
+            game.getView().gameOverMessage(2);  // Player O Won
+        }
     }
 
     @Override
